@@ -1,8 +1,6 @@
 /* https://colorhunt.co/palette/222831393e4600adb5eeeeee */
 /* https://colorhunt.co/palette/1534483c5b6f948979dfd0b8 */
-body {
-  margin: 0;
-  background-color: var(--sub-color);
+:root {
   --main-color: #222831;
   --sub-color: #eeeeee;
   --black-color: #153448;
@@ -11,8 +9,18 @@ body {
   --white-color: #dfd0b8;
 }
 
+body {
+  margin: 0;
+  color: var(--main-color);
+  background-color: var(--sub-color);
+}
+
 .rootlayout {
   margin: 0 auto;
   display: flex;
   max-width: 1300px;
+  min-height: 100vh;
+  outline: solid;
+  outline-color: var(--white-color);
+  outline-width: 1px;
 }
