@@ -1,3 +1,17 @@
+/* https://colorhunt.co/palette/222831393e4600adb5eeeeee */
+/* https://colorhunt.co/palette/1534483c5b6f948979dfd0b8 */
 body {
   margin: 0;
+  background-color: var(--sub-color);
+  --main-color: #222831;
+  --sub-color: #eeeeee;
+  --black-color: #153448;
+  --semi-black-color: #3c5b6f;
+  --semi-white-color: #948979;
+  --white-color: #dfd0b8;
+}
+
+.rootlayout {
+  display: flex;
+  max-width: 1300px;
 }
