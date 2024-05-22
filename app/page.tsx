@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main>gomoku</main>;
+  return <div>aaa</div>;
 }
