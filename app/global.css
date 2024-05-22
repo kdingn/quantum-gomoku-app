@@ -18,7 +18,7 @@ body {
 
 .rootlayout {
   margin: 0 auto;
-  max-width: 300px;
+  width: 800px;
   min-height: 100vh;
   padding: 5px;
 }
