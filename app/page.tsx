@@ -1,3 +1,9 @@
+import Goban from "./goban";
+
 export default function Home() {
-  return <div>aaa</div>;
+  return (
+    <div>
+      <Goban />
+    </div>
+  );
 }
