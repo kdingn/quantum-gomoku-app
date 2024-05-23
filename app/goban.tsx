@@ -1,13 +1,29 @@
-import GoIcon from "../public/Go_-.svg";
-import "./global.css";
+"use client";
 
-function goban() {
+import { useEffect, useState } from "react";
+import "./global.css";
+import GoIcon from "./goicons/go_-";
+
+function Goban() {
+  const [boardColor, setBoardColor] = useState("");
+  const [lineColor, setLineColor] = useState("");
+
+  useEffect(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const boardColor = rootStyles.getPropertyValue("--board-color").trim();
+    const lineColor = rootStyles.getPropertyValue("--line-color").trim();
+    setBoardColor(boardColor);
+    setLineColor(lineColor);
+  }, []);
+
   return (
     <div>
-      <div>goban</div>
-      <div>{<GoIcon />}</div>
+      <div>gobannnnnn</div>
+      <div>
+        <GoIcon line={lineColor} background={boardColor} />
+      </div>
     </div>
   );
 }
 
-export default goban;
+export default Goban;
