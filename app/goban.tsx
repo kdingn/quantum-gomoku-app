@@ -20,7 +20,26 @@ function Goban() {
     <div>
       <div>gobannnnnn</div>
       <div>
-        <GoIcon line={lineColor} background={boardColor} />
+        <table className="goban">
+          <tbody>
+            <tr>
+              <td>
+                <GoIcon line={lineColor} background={boardColor} />
+              </td>
+              <td>
+                <GoIcon line={lineColor} background={boardColor} />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <GoIcon line={lineColor} background={boardColor} />
+              </td>
+              <td>
+                <GoIcon line={lineColor} background={boardColor} />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
