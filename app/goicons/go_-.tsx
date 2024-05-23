@@ -1,3 +1,4 @@
+// https://commons.wikimedia.org/wiki/Category:Go_(set_of_square_images)?uselang=ja
 const SvgComponent = ({ background = "#DCB35C", line = "#000" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
     <rect width="500" height="500" fill={background} />
