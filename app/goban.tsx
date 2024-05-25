@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./global.css";
-import GoIcon from "./goicons/go_-";
+import IconBoardDiagram from "./goicons/go_board_diagram_image";
 
 function Goban() {
   const [boardColor, setBoardColor] = useState("");
@@ -16,32 +16,29 @@ function Goban() {
     setLineColor(lineColor);
   }, []);
 
+  const tileSize = 40;
+  const gobanSize = 9;
+  const gobanDocument = [];
+  for (let i = 1; i <= gobanSize; i++) {
+    var gobanRow = [];
+    for (let j = 1; j <= gobanSize; j++) {
+      gobanRow.push(
+        <td key={j}>
+          <IconBoardDiagram
+            line={lineColor}
+            background={boardColor}
+            size={tileSize}
+          />
+        </td>
+      );
+    }
+    gobanDocument.push(<tr key={i}>{gobanRow}</tr>);
+  }
+
   return (
-    <div>
-      <div>gobannnnnn</div>
-      <div>
-        <table className="goban">
-          <tbody>
-            <tr>
-              <td>
-                <GoIcon line={lineColor} background={boardColor} />
-              </td>
-              <td>
-                <GoIcon line={lineColor} background={boardColor} />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <GoIcon line={lineColor} background={boardColor} />
-              </td>
-              <td>
-                <GoIcon line={lineColor} background={boardColor} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <table className="goban">
+      <tbody>{gobanDocument}</tbody>
+    </table>
   );
 }
 

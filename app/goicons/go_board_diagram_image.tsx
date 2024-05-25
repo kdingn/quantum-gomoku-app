@@ -11,7 +11,6 @@ const SvgComponent = ({
       strokeWidth={size / 25}
       d={`M0,${size / 2}H${size}M${size / 2},0V${size}`}
     />
-    <circle cx={size / 2} cy={size / 2} r={size / 10} fill={line} />
   </svg>
 );
 
