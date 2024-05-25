@@ -1,22 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import "./global.css";
-import IconBoardDiagram from "./goicons/go_board_diagram_image";
+import Gotile from "./gotile";
 
 function Goban() {
-  const [boardColor, setBoardColor] = useState("");
-  const [lineColor, setLineColor] = useState("");
-
-  useEffect(() => {
-    const rootStyles = getComputedStyle(document.documentElement);
-    const boardColor = rootStyles.getPropertyValue("--board-color").trim();
-    const lineColor = rootStyles.getPropertyValue("--line-color").trim();
-    setBoardColor(boardColor);
-    setLineColor(lineColor);
-  }, []);
-
-  const tileSize = 40;
   const gobanSize = 9;
   const gobanDocument = [];
   for (let i = 1; i <= gobanSize; i++) {
@@ -24,11 +9,7 @@ function Goban() {
     for (let j = 1; j <= gobanSize; j++) {
       gobanRow.push(
         <td key={j}>
-          <IconBoardDiagram
-            line={lineColor}
-            background={boardColor}
-            size={tileSize}
-          />
+          <Gotile vindex={i} hindex={j} gobanSize={gobanSize} />
         </td>
       );
     }
