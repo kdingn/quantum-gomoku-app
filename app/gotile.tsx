@@ -11,18 +11,25 @@ import Goul from "./goicons/go_ul";
 import Goup from "./goicons/go_up";
 import Gour from "./goicons/go_ur";
 
-function Gotile(props: any) {
+function Gotile(props) {
   const [boardColor, setBoardColor] = useState("");
   const [lineColor, setLineColor] = useState("");
+  const [textColor, setTextColor] = useState("");
+  const [circleColor, setCircleColor] = useState("");
   const tileSize = 40;
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
-    const boardColor = rootStyles.getPropertyValue("--board-color").trim();
-    const lineColor = rootStyles.getPropertyValue("--line-color").trim();
-    setBoardColor(boardColor);
-    setLineColor(lineColor);
-  }, []);
+    setBoardColor(rootStyles.getPropertyValue("--board-color").trim());
+    setLineColor(rootStyles.getPropertyValue("--line-color").trim());
+    if (props.prob > 50) {
+      setCircleColor(rootStyles.getPropertyValue("--black-color").trim());
+      setTextColor(rootStyles.getPropertyValue("--white-color").trim());
+    } else {
+      setCircleColor(rootStyles.getPropertyValue("--white-color").trim());
+      setTextColor(rootStyles.getPropertyValue("--black-color").trim());
+    }
+  });
 
   if (props.vindex === 1 && props.hindex === 1) {
     return (
@@ -97,6 +104,9 @@ function Gotile(props: any) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   }
