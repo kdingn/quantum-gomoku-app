@@ -37,6 +37,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.vindex === 1 && props.hindex === props.gobanSize) {
@@ -45,6 +48,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.vindex === props.gobanSize && props.hindex === 1) {
@@ -53,6 +59,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (
@@ -64,6 +73,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.vindex === 1) {
@@ -72,6 +84,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.hindex === 1) {
@@ -80,6 +95,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.hindex === props.gobanSize) {
@@ -88,6 +106,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else if (props.vindex === props.gobanSize) {
@@ -96,6 +117,9 @@ function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
+        text={props.prob}
+        textColor={textColor}
+        circleColor={circleColor}
       />
     );
   } else {

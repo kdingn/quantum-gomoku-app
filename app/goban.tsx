@@ -7,6 +7,14 @@ function Goban() {
     { timestamp: "", i: 3, j: 3, prob: 10 },
     { timestamp: "", i: 2, j: 2, prob: 70 },
     { timestamp: "", i: 3, j: 4, prob: 30 },
+    { timestamp: "", i: 1, j: 1, prob: 90 },
+    { timestamp: "", i: 1, j: 2, prob: 10 },
+    { timestamp: "", i: 3, j: 1, prob: 70 },
+    { timestamp: "", i: 13, j: 1, prob: 30 },
+    { timestamp: "", i: 1, j: 13, prob: 90 },
+    { timestamp: "", i: 2, j: 13, prob: 10 },
+    { timestamp: "", i: 13, j: 2, prob: 70 },
+    { timestamp: "", i: 13, j: 13, prob: 30 },
   ];
   const positionProbMap = {};
   sequence.forEach((item) => {
