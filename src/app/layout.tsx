@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "quantum gomoku app",
 };
 
-export default function Layout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

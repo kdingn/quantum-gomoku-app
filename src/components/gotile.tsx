@@ -33,7 +33,7 @@ function Gotile(props) {
     }
 
     const handleResize = () => {
-      const maxTileWidth = (window.innerWidth - 5 * 2) / props.gobanSize;
+      const maxTileWidth = (window.outerWidth - 5 * 2) / props.gobanSize;
       if (maxTileWidth < defaultTileSize) {
         setTileSize(maxTileWidth);
       } else {
