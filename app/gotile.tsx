@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Godot from "./goicons/go_dot";
 import Gole from "./goicons/go_le";
 import Goll from "./goicons/go_ll";
 import Golo from "./goicons/go_lo";
 import Golr from "./goicons/go_lr";
+import Gono from "./goicons/go_no";
 import Gori from "./goicons/go_ri";
 import Goul from "./goicons/go_ul";
 import Goup from "./goicons/go_up";
@@ -25,26 +25,80 @@ function Gotile(props) {
   }, []);
 
   if (props.vindex === 1 && props.hindex === 1) {
-    return <Goul line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Goul
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.vindex === 1 && props.hindex === props.gobanSize) {
-    return <Gour line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Gour
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.vindex === props.gobanSize && props.hindex === 1) {
-    return <Goll line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Goll
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (
     props.vindex === props.gobanSize &&
     props.hindex === props.gobanSize
   ) {
-    return <Golr line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Golr
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.vindex === 1) {
-    return <Goup line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Goup
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.hindex === 1) {
-    return <Gole line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Gole
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.hindex === props.gobanSize) {
-    return <Gori line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Gori
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else if (props.vindex === props.gobanSize) {
-    return <Golo line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Golo
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   } else {
-    return <Godot line={lineColor} background={boardColor} size={tileSize} />;
+    return (
+      <Gono
+        lineColor={lineColor}
+        backgroundColor={boardColor}
+        size={tileSize}
+      />
+    );
   }
 }
 

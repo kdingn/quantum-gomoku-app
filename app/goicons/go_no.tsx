@@ -1,13 +1,13 @@
 // https://commons.wikimedia.org/wiki/Category:Go_(set_of_square_images)?uselang=ja
 const SvgComponent = ({
-  background = "#DCB35C",
-  line = "#000",
+  backgroundColor = "#DCB35C",
+  lineColor = "#000",
   size = 100,
 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size}>
-    <rect width={size} height={size} fill={background} />
+    <rect width={size} height={size} fill={backgroundColor} />
     <path
-      stroke={line}
+      stroke={lineColor}
       strokeWidth={size / 25}
       d={`M0,${size / 2}H${size}M${size / 2},0V${size}`}
     />
