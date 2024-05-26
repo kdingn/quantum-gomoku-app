@@ -3,13 +3,10 @@
 :root {
   --main-color: #222831;
   --sub-color: #eeeeee;
-  --black-color: #153448;
-  --semi-black-color: #3c5b6f;
-  --semi-white-color: #948979;
-  --white-color: #dfd0b8;
+  --board-color: #ffc96f;
   --line-color: #222831;
-  --board-color: #016a70;
-  --app-width: 1000px;
+  --hover-color: #028391;
+  --app-width: 800px;
 }
 
 body {
@@ -21,16 +18,21 @@ body {
 
 .rootlayout {
   margin: 0 auto;
-  width: 800px;
+  width: var(--app-width);
   min-height: 100vh;
   padding: 5px;
 }
 
-.navbar h3 {
+.navbar h2 {
   font-weight: 100;
   margin-block-start: 0;
   margin-block-end: 0;
   text-decoration: underline;
+}
+
+.goban-container {
+  display: flex;
+  justify-content: center;
 }
 
 .goban {
@@ -40,4 +42,8 @@ body {
 
 .goban td {
   padding: 0;
+}
+
+.goban-tile:hover {
+  outline: 2px solid var(--hover-color);
 }
