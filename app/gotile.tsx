@@ -11,7 +11,7 @@ import Goul from "./goicons/go_ul";
 import Goup from "./goicons/go_up";
 import Gour from "./goicons/go_ur";
 
-function Gotile(props) {
+function Gotile(props: any) {
   const [boardColor, setBoardColor] = useState("");
   const [lineColor, setLineColor] = useState("");
   const tileSize = 40;
