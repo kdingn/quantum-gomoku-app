@@ -16,7 +16,7 @@ const SvgComponent = ({
     />
     {text && (
       <>
-        <circle cx="50%" cy="50%" r={size / 2.5} fill={circleColor} />
+        <circle cx="50%" cy="50%" r={size / 2.3} fill={circleColor} />
         <text
           x="49%"
           y="54%"
