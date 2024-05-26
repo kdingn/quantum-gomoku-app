@@ -1,3 +1,4 @@
+import "../styles/global.css";
 const title = "QUANTUM GOMOKU";
 
 function Navbar() {

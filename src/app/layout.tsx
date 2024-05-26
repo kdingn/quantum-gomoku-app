@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Head from "next/head";
-import "./global.css";
-import Navbar from "./navbar";
+import Navbar from "../components/navbar";
+import "../styles/global.css";
 
 export const metadata: Metadata = {
   title: "quantum-gomoku",
   description: "quantum gomoku app",
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
