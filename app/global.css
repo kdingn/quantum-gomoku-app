@@ -45,5 +45,5 @@ body {
 }
 
 .goban-tile:hover {
-  outline: 2px solid var(--hover-color);
+  outline: 1px solid var(--hover-color);
 }
