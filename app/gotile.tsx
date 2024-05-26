@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Gole from "./goicons/go_le";
 import Goll from "./goicons/go_ll";
 import Golo from "./goicons/go_lo";
@@ -12,13 +12,15 @@ import Goup from "./goicons/go_up";
 import Gour from "./goicons/go_ur";
 
 function Gotile(props) {
+  const defaultTileSize = 40;
+
   const [boardColor, setBoardColor] = useState("");
   const [lineColor, setLineColor] = useState("");
   const [textColor, setTextColor] = useState("");
   const [circleColor, setCircleColor] = useState("");
-  const tileSize = 40;
+  const [tileSize, setTileSize] = useState(defaultTileSize);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
     setBoardColor(rootStyles.getPropertyValue("--board-color").trim());
     setLineColor(rootStyles.getPropertyValue("--line-color").trim());
@@ -29,7 +31,21 @@ function Gotile(props) {
       setCircleColor(rootStyles.getPropertyValue("--white-color").trim());
       setTextColor(rootStyles.getPropertyValue("--black-color").trim());
     }
-  });
+
+    const handleResize = () => {
+      const maxTileWidth = (window.innerWidth - 5 * 2) / props.gobanSize;
+      if (maxTileWidth < defaultTileSize) {
+        setTileSize(maxTileWidth);
+      } else {
+        setTileSize(defaultTileSize);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [props.gobanSize, defaultTileSize]);
 
   if (props.vindex === 1 && props.hindex === 1) {
     return (

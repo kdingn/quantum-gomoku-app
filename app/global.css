@@ -23,6 +23,7 @@ body {
   width: var(--app-width);
   min-height: 100vh;
   padding: 5px;
+  box-sizing: border-box;
 }
 
 .navbar h2 {
