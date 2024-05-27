@@ -1,25 +1,52 @@
 import Gotile from "@/components/gotile";
-// import { db } from "@/firebase/firebase";
+import { db } from "@/firebase/firebase";
 import "@/styles/global.css";
 import {
-  // collection,
-  // onSnapshot,
-  // orderBy,
-  // query,
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
 } from "firebase/firestore";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function Goban() {
   const [sequence, setSequence] = useState([]);
+  const [error, setError] = useState(null);
+  const matchId = useSearchParams().get("id");
 
   useEffect(() => {
-    // const data = collection(db, "match-00000");
-    // const q = query(data, orderBy("timestamp", "asc"));
-    // onSnapshot(q, (querySnapshot) => {
-    //   setSequence(querySnapshot.docs.map((doc) => doc.data()));
-    // });
+    async function fetchData() {
+      try {
+        if (!matchId) {
+          setError("Match ID is not designated");
+          return;
+        }
+
+        const data = collection(db, `match-${matchId}`);
+
+        if ((await getDocs(data)).empty) {
+          setError("Match is not found");
+          return;
+        }
+
+        const q = query(data, orderBy("timestamp", "asc"));
+        onSnapshot(q, (querySnapshot) => {
+          setSequence(querySnapshot.docs.map((doc) => doc.data()));
+        });
+      } catch (error) {
+        setError("Error occurred in connection");
+      }
+    }
+
+    fetchData();
   }, []);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   const positionProbMap = {};
   sequence.forEach((item) => {
