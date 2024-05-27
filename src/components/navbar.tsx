@@ -1,10 +1,13 @@
 import "@/styles/global.css";
+import Link from "next/link";
 const title = "QUANTUM GOMOKU";
 
 function Navbar() {
   return (
     <div className="navbar">
-      <h2>{title}</h2>
+      <Link href="/">
+        <h2>{title}</h2>
+      </Link>
     </div>
   );
 }
