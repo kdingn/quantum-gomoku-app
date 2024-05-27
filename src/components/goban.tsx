@@ -1,17 +1,24 @@
 import Gotile from "@/components/gotile";
-import { db } from "@/firebase/firebase";
+// import { db } from "@/firebase/firebase";
 import "@/styles/global.css";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  // collection,
+  // onSnapshot,
+  // orderBy,
+  // query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 function Goban() {
   const [sequence, setSequence] = useState([]);
 
   useEffect(() => {
-    const data = collection(db, "match-00000");
-    onSnapshot(data, (querySnapshot) => {
-      setSequence(querySnapshot.docs.map((doc) => doc.data()));
-    });
+    // const data = collection(db, "match-00000");
+    // const q = query(data, orderBy("timestamp", "asc"));
+    // onSnapshot(q, (querySnapshot) => {
+    //   setSequence(querySnapshot.docs.map((doc) => doc.data()));
+    // });
   }, []);
 
   const positionProbMap = {};
@@ -19,6 +26,25 @@ function Goban() {
     const key = `${item.i}-${item.j}`;
     positionProbMap[key] = item.prob;
   });
+
+  const nextProbDict = {
+    90: 10,
+    10: 70,
+    70: 30,
+    30: 90,
+  };
+  function addSequence(vindex, hindex) {
+    const lastProb = sequence.length !== 0 ? sequence.slice(-1)[0]["prob"] : 30;
+    setSequence([
+      ...sequence,
+      {
+        i: vindex,
+        j: hindex,
+        prob: nextProbDict[lastProb],
+        timestamp: serverTimestamp(),
+      },
+    ]);
+  }
 
   const gobanSize = 13;
   const gobanDocument = [];
@@ -29,7 +55,10 @@ function Goban() {
       const prob = positionProbMap[key] || null;
       gobanRow.push(
         <td key={j}>
-          <div className="goban-tile">
+          <div
+            className="goban-tile"
+            onClick={prob === null ? () => addSequence(i, j) : () => null}
+          >
             <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
           </div>
         </td>
