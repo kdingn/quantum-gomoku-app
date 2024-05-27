@@ -17,7 +17,6 @@ function Goban() {
   const [sequence, setSequence] = useState([]);
   const [error, setError] = useState(null);
   const matchId = useSearchParams().get("id");
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -25,14 +24,11 @@ function Goban() {
           setError("Match ID is not designated");
           return;
         }
-
         const data = collection(db, `match-${matchId}`);
-
         if ((await getDocs(data)).empty) {
           setError("Match is not found");
           return;
         }
-
         const q = query(data, orderBy("timestamp", "asc"));
         onSnapshot(q, (querySnapshot) => {
           setSequence(querySnapshot.docs.map((doc) => doc.data()));
@@ -41,10 +37,8 @@ function Goban() {
         setError("Error occurred in connection");
       }
     }
-
     fetchData();
   }, []);
-
   if (error) {
     return <div>{error}</div>;
   }
