@@ -1,7 +1,7 @@
+import Navbar from "@/components/navbar";
+import "@/styles/global.css";
 import type { Metadata } from "next";
 import Head from "next/head";
-import Navbar from "../components/navbar";
-import "../styles/global.css";
 
 export const metadata: Metadata = {
   title: "quantum-gomoku",
