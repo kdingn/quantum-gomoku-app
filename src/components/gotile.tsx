@@ -1,5 +1,3 @@
-// "use client";
-
 import Gole from "@/components/goicons/go_le";
 import Goll from "@/components/goicons/go_ll";
 import Golo from "@/components/goicons/go_lo";

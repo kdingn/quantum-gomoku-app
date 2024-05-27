@@ -1,5 +1,3 @@
-"use client";
-
 import Gotile from "@/components/gotile";
 import { db } from "@/firebase/firebase";
 import "@/styles/global.css";
