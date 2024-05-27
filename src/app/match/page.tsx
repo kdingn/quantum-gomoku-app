@@ -1,5 +1,5 @@
-import Goban from "../../components/goban";
-import "../../styles/global.css";
+import Goban from "@/components/goban";
+import "@/styles/global.css";
 
 export default function Home() {
   return (

@@ -1,15 +1,15 @@
-"use client";
+// "use client";
 
+import Gole from "@/components/goicons/go_le";
+import Goll from "@/components/goicons/go_ll";
+import Golo from "@/components/goicons/go_lo";
+import Golr from "@/components/goicons/go_lr";
+import Gono from "@/components/goicons/go_no";
+import Gori from "@/components/goicons/go_ri";
+import Goul from "@/components/goicons/go_ul";
+import Goup from "@/components/goicons/go_up";
+import Gour from "@/components/goicons/go_ur";
 import { useLayoutEffect, useState } from "react";
-import Gole from "./goicons/go_le";
-import Goll from "./goicons/go_ll";
-import Golo from "./goicons/go_lo";
-import Golr from "./goicons/go_lr";
-import Gono from "./goicons/go_no";
-import Gori from "./goicons/go_ri";
-import Goul from "./goicons/go_ul";
-import Goup from "./goicons/go_up";
-import Gour from "./goicons/go_ur";
 
 function Gotile(props) {
   const defaultTileSize = 40;
