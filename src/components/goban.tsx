@@ -28,10 +28,10 @@ function Goban() {
   });
 
   const nextProbDict = {
-    90: 10,
-    10: 70,
-    70: 30,
-    30: 90,
+    70: 10,
+    10: 90,
+    90: 30,
+    30: 70,
   };
   function addSequence(vindex, hindex) {
     const lastProb = sequence.length !== 0 ? sequence.slice(-1)[0]["prob"] : 30;
