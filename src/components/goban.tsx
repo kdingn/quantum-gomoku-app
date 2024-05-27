@@ -2,6 +2,7 @@ import Gotile from "@/components/gotile";
 import { db } from "@/firebase/firebase";
 import "@/styles/global.css";
 import {
+  addDoc,
   collection,
   getDocs,
   onSnapshot,
@@ -62,15 +63,14 @@ function Goban() {
   };
   function addSequence(vindex, hindex) {
     const lastProb = sequence.length !== 0 ? sequence.slice(-1)[0]["prob"] : 30;
-    setSequence([
-      ...sequence,
-      {
-        i: vindex,
-        j: hindex,
-        prob: nextProbDict[lastProb],
-        timestamp: serverTimestamp(),
-      },
-    ]);
+    const newPoint = {
+      i: vindex,
+      j: hindex,
+      prob: nextProbDict[lastProb],
+      timestamp: serverTimestamp(),
+    };
+    setSequence([...sequence, newPoint]);
+    addDoc(collection(db, `match-${matchId}`), newPoint);
   }
 
   const gobanSize = 13;
