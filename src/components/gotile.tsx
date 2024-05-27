@@ -7,7 +7,7 @@ import Gori from "@/components/goicons/go_ri";
 import Goul from "@/components/goicons/go_ul";
 import Goup from "@/components/goicons/go_up";
 import Gour from "@/components/goicons/go_ur";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function Gotile(props) {
   const defaultTileSize = 40;
@@ -18,7 +18,7 @@ function Gotile(props) {
   const [circleColor, setCircleColor] = useState("");
   const [tileSize, setTileSize] = useState(defaultTileSize);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
     setBoardColor(rootStyles.getPropertyValue("--board-color").trim());
     setLineColor(rootStyles.getPropertyValue("--line-color").trim());
@@ -43,7 +43,7 @@ function Gotile(props) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [props.gobanSize, defaultTileSize]);
+  }, [props]);
 
   if (props.vindex === 1 && props.hindex === 1) {
     return (
