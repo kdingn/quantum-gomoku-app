@@ -1,6 +1,6 @@
 "use client";
 
-import { login, logout } from "@/firebase/login";
+import { login, logout } from "@/libs/login";
 import { useEffect, useState } from "react";
 
 function Page() {

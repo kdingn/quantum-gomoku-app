@@ -1,5 +1,5 @@
 import Gotile from "@/components/gotile";
-import { db } from "@/firebase/firebase";
+import { db } from "@/libs/firebase";
 import "@/styles/global.css";
 import {
   addDoc,

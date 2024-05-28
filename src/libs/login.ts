@@ -1,4 +1,4 @@
-import { auth } from "@/firebase/firebase";
+import { auth } from "@/libs/firebase";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 export const login = () => {
