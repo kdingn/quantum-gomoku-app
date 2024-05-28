@@ -9,7 +9,7 @@ import Goup from "@/components/goicons/go_up";
 import Gour from "@/components/goicons/go_ur";
 import { useEffect, useState } from "react";
 
-function Gotile(props) {
+export default function Gotile(props) {
   const defaultTileSize = 40;
 
   const [boardColor, setBoardColor] = useState("");
@@ -149,5 +149,3 @@ function Gotile(props) {
     );
   }
 }
-
-export default Gotile;

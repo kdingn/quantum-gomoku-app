@@ -13,7 +13,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function Goban() {
+export default function Goban() {
   const [sequence, setSequence] = useState([]);
   const [error, setError] = useState(null);
   const matchId = useSearchParams().get("id");
@@ -94,5 +94,3 @@ function Goban() {
     </table>
   );
 }
-
-export default Goban;

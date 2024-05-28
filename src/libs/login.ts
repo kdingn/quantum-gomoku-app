@@ -9,7 +9,3 @@ export const login = () => {
 export const logout = () => {
   return signOut(auth);
 };
-
-// export const isAuthenticated = () => {
-
-// }
