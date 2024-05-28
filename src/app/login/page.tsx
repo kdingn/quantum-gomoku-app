@@ -1,20 +1,21 @@
 "use client";
 
+import { GlobalContext } from "@/app/layout";
 import { login, logout } from "@/libs/login";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
-function Page() {
-  const [user, setUser] = useState(null);
+export default function Page() {
+  const [loginUser, setLoginUser] = useContext(GlobalContext);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const router = useRouter();
 
   function loginWrapper() {
     login()
       .then((result) => {
-        setUser(result.user);
+        setLoginUser(result.user);
+        sessionStorage.setItem("gomokuUser", JSON.stringify(result.user));
+        router.push("/");
       })
       .catch((error) => {
         setError(error.message);
@@ -24,7 +25,9 @@ function Page() {
   function logoutWrapper() {
     logout()
       .then(() => {
-        setUser(null);
+        setLoginUser(null);
+        sessionStorage.removeItem("gomokuUser");
+        router.push("/login");
       })
       .catch((error) => {
         setError(error.message);
@@ -33,12 +36,9 @@ function Page() {
 
   return (
     <div>
-      <h3>page</h3>
       <span>{error}</span>
       <button onClick={loginWrapper}>login</button>
       <button onClick={logoutWrapper}>logout</button>
     </div>
   );
 }
-
-export default Page;

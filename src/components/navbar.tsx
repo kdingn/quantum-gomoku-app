@@ -1,8 +1,8 @@
 import "@/styles/global.css";
 import Link from "next/link";
-const title = "QUANTUM GOMOKU";
+const title = "Quantum Gomoku";
 
-function Navbar() {
+export default function Navbar() {
   return (
     <div className="navbar">
       <Link href="/">
@@ -11,5 +11,3 @@ function Navbar() {
     </div>
   );
 }
-
-export default Navbar;
