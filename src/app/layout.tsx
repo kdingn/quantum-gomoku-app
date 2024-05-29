@@ -12,12 +12,28 @@ export default function RootLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [loginUser, setLoginUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (sessionStorage.length === 0) {
       router.push("/login");
+    } else if (sessionStorage.length !== 0 && pathname === "/login") {
+      router.push("/");
     }
+    setLoading(false);
   }, [pathname]);
+
+  if (loading) {
+    return (
+      <html lang="en">
+        <body>
+          <div className="rootlayout">
+            <div>Loading...</div>
+          </div>
+        </body>
+      </html>
+    );
+  }
 
   return (
     <GlobalContext.Provider value={[loginUser, setLoginUser]}>
