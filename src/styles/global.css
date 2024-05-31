@@ -8,6 +8,7 @@
   --hover-color: #028391;
   --black-color: #222831;
   --white-color: #eeeeee;
+  --warn-color: #ff2e63;
   --app-width: 600px;
 }
 
@@ -73,7 +74,7 @@ body {
 }
 
 .login-form span {
-  font-family: monospace;
+  color: var(--warn-color);
 }
 
 .login-form-inputtext {

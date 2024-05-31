@@ -1,7 +1,6 @@
 "use client";
 
 import { GlobalContext } from "@/app/layout";
-import { login, logout } from "@/libs/login";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import "@/styles/global.css";
@@ -9,46 +8,41 @@ import { db } from "@/libs/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 export default function Page() {
-  // const [loginUser, setLoginUser] = useContext(GlobalContext);
-  const [errorSignup, setErrorSignup] = useState(null);
-  const [errorSignin, setErrorSignin] = useState(null);
-  // const router = useRouter();
+  const router = useRouter();
+  const [, setLoginUser] = useContext(GlobalContext);
+  const [formData, setFormData] = useState({
+    usernameSignup: "",
+    passwordSignup: "",
+    errorSignup: null,
+    usernameSignin: "",
+    passwordSignin: "",
+    errorSignin: null,
+  });
 
-  // function loginWrapper() {
-  //   login()
-  //     .then((result) => {
-  //       setLoginUser(result.user);
-  //       sessionStorage.setItem("gomokuUser", JSON.stringify(result.user));
-  //       router.push("/");
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  // }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  // function logoutWrapper() {
-  //   logout()
-  //     .then(() => {
-  //       setLoginUser(null);
-  //       sessionStorage.removeItem("gomokuUser");
-  //       router.push("/login");
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  // }
-
-  async function signin(username) {
+  async function signin() {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("username", "==", username))
+      query(
+        collection(db, "users"),
+        where("username", "==", formData.usernameSignin)
+      )
     );
     if (querySnapshot.empty) {
-      setErrorSignin("User not found");
+      setFormData({ ...formData, ["errorSignin"]: "User not found" });
+    } else {
+      const result = querySnapshot.docs[0].data();
+      if (result.password !== formData.passwordSignin) {
+        setFormData({ ...formData, ["errorSignin"]: "Password unmatched" });
+      } else {
+        setLoginUser(result.user);
+        sessionStorage.setItem("gomokuUser", JSON.stringify(result.username));
+        router.push("/");
+      }
     }
-    console.log(querySnapshot.docs);
-    //       setLoginUser(result.user);
-    //       sessionStorage.setItem("gomokuUser", JSON.stringify(result.user));
-    //       router.push("/");
   }
 
   return (
@@ -61,12 +55,16 @@ export default function Page() {
               <input
                 className="login-form-inputtext"
                 placeholder="username"
+                name="usernameSignup"
+                onChange={handleInputChange}
               ></input>
               <br />
               <input
                 type="password"
                 className="login-form-inputtext"
                 placeholder="password"
+                name="passwordSignup"
+                onChange={handleInputChange}
               ></input>
               <br />
               <div className="login-form-inputsubmit">
@@ -80,25 +78,25 @@ export default function Page() {
         <div className="login-form-outline">
           <div>
             <h3>Sign In</h3>
-            <span>{errorSignin}</span>
+            <span>{formData.errorSignin}</span>
             <form>
               <input
                 className="login-form-inputtext"
                 placeholder="username"
+                name="usernameSignin"
+                onChange={handleInputChange}
               ></input>
               <br />
               <input
-                type="password"
+                // type="password"
                 className="login-form-inputtext"
                 placeholder="password"
+                name="passwordSignin"
+                onChange={handleInputChange}
               ></input>
               <br />
               <div className="login-form-inputsubmit">
-                <input
-                  type="button"
-                  value="sign-in"
-                  onClick={signin.bind(null, "admin")}
-                ></input>
+                <input type="button" value="sign-in" onClick={signin}></input>
               </div>
             </form>
           </div>
