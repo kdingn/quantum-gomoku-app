@@ -8,22 +8,22 @@
   --hover-color: #028391;
   --black-color: #222831;
   --white-color: #eeeeee;
-  --app-width: 800px;
+  --app-width: 600px;
 }
 
 body {
   margin: 0;
+  flex-direction: column;
   color: var(--main-color);
   background-color: var(--sub-color);
-  display: flex;
 }
 
-.rootlayout {
-  margin: 0 auto;
-  width: var(--app-width);
-  min-height: 100dvh;
+.navbar {
+  display: flex;
   padding: 5px;
-  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: var(--main-color);
+  color: var(--sub-color);
 }
 
 .navbar a {
@@ -36,6 +36,17 @@ body {
   margin-block-start: 0;
   margin-block-end: 0;
   text-decoration: underline;
+}
+
+.container {
+  display: flex;
+}
+
+.rootlayout {
+  margin: 0 auto;
+  width: var(--app-width);
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .goban-container {
@@ -54,4 +65,41 @@ body {
 
 .goban-tile:hover {
   outline: 1px solid var(--hover-color);
+}
+
+.login-form h3 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.login-form span {
+  font-family: monospace;
+}
+
+.login-form-inputtext {
+  margin-top: 5px;
+  width: 250px;
+  font-size: medium;
+}
+
+.login-form-inputsubmit {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  margin-bottom: 70px;
+}
+
+.login-form-outline {
+  outline: solid;
+  outline-width: 1px;
+  outline-color: var(--main-color);
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
 }
