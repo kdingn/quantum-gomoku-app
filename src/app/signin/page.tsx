@@ -3,7 +3,7 @@
 import { GlobalContext } from "@/app/layout";
 import { db } from "@/libs/firebase";
 import "@/styles/global.css";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
@@ -36,6 +36,16 @@ export default function Page() {
         ...formData,
         ["errorSignup"]: "ok",
       });
+      addDoc(collection(db, "users"), {
+        username: formData.usernameSignup,
+        password: formData.passwordSignup,
+      });
+      setLoginUser(formData.usernameSignup);
+      sessionStorage.setItem(
+        "gomokuUser",
+        JSON.stringify(formData.usernameSignup)
+      );
+      router.push("/");
     }
   }
 
