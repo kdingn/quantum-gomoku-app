@@ -1,11 +1,11 @@
 "use client";
 
 import { GlobalContext } from "@/app/layout";
+import { db } from "@/libs/firebase";
+import "@/styles/global.css";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import "@/styles/global.css";
-import { db } from "@/libs/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
 
 export default function Page() {
   const router = useRouter();
@@ -18,11 +18,6 @@ export default function Page() {
     passwordSignin: "",
     errorSignin: null,
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   async function signin() {
     const querySnapshot = await getDocs(
@@ -44,6 +39,17 @@ export default function Page() {
       }
     }
   }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      signin();
+    }
+  };
 
   return (
     <div className="login-form">
@@ -93,6 +99,7 @@ export default function Page() {
                 placeholder="password"
                 name="passwordSignin"
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
               ></input>
               <br />
               <div className="login-form-inputsubmit">
