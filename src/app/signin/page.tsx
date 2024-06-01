@@ -3,13 +3,13 @@
 import { GlobalContext } from "@/app/layout";
 import { db } from "@/libs/firebase";
 import "@/styles/global.css";
-import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
-  const [, setLoginUser] = useContext(GlobalContext);
+  const [loginUser, setLoginUser] = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     usernameSignup: "",
     passwordSignup: "",
@@ -59,7 +59,7 @@ export default function Page() {
       if (result.password !== formData.passwordSignin) {
         setFormData({ ...formData, ["errorSignin"]: "Password unmatched" });
       } else {
-        setLoginUser(result.user);
+        setLoginUser(result.username);
         sessionStorage.setItem("gomokuUser", JSON.stringify(result.username));
         router.push("/");
       }
