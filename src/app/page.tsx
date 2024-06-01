@@ -23,11 +23,9 @@ export default function Home() {
             <span>Create Match</span>
           </div>
         </div>
-      </div>
-      <div>
         <span className="home-content-matches-title">Matches</span>
-        {matchesDocument}
       </div>
+      <div>{matchesDocument}</div>
     </div>
   );
 }
