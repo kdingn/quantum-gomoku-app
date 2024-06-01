@@ -19,11 +19,23 @@ export default function Home() {
   }, []);
 
   const matchesDocument = [];
-  matches.forEach((match) =>
+  matches.forEach((match) => {
+    const date = match.update.toDate();
     matchesDocument.push(
-      <div className="home-content-matchinfo">{match.black}</div>
-    )
-  );
+      <div className="home-content-matchinfo-wrapper">
+        <div className="home-content-matchinfo">
+          <span className="home-content-matchinfo-timestamp">
+            {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+          </span>
+          <div className="home-content-matchinfo-title">
+            <span className="home-content-matchinfo-player">{match.black}</span>
+            <span className="home-content-matchinfo-vs">vs</span>
+            <span className="home-content-matchinfo-player">{match.white}</span>
+          </div>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div>
@@ -32,12 +44,12 @@ export default function Home() {
         <div className="home-content">
           <span className="home-content-description">*now in preparing...</span>
           <div className="home-content-center">
-            <span>Play Game with AI</span>
+            <span className="home-content-title">Play Game with AI</span>
           </div>
         </div>
         <div className="home-content">
           <div className="home-content-center">
-            <span>Create Match</span>
+            <span className="home-content-title">Create Match</span>
           </div>
         </div>
         <span className="home-content-matches-title">Matches</span>

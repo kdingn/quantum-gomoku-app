@@ -139,10 +139,49 @@ body {
   width: 100%;
 }
 
+.home-content-title {
+  font-size: large;
+}
+
 .home-content-matches-title {
   text-decoration: underline;
 }
 
+.home-content-matchinfo-wrapper {
+  padding: 6px;
+}
+
 .home-content-matchinfo {
-  height: 100px;
+  cursor: pointer;
+  height: 60px;
+  outline: solid;
+  outline-color: var(--hover-color);
+}
+
+.home-content-matchinfo-timestamp {
+  font-size: x-small;
+  position: absolute;
+}
+
+.home-content-matchinfo-title {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.home-content-matchinfo-player {
+  flex-grow: 1;
+  text-align: center;
+  max-width: 25%;
+  font-size: medium;
+}
+
+.home-content-matchinfo-vs {
+  font-size: small;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
