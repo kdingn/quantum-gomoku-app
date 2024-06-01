@@ -1,12 +1,29 @@
 "use client";
 
+import { db } from "@/libs/firebase";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 export default function Home() {
   const username = sessionStorage.getItem("username");
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const q = query(collection(db, "matches"), orderBy("update", "desc"));
+      onSnapshot(q, (querySnapshot) => {
+        setMatches(querySnapshot.docs.map((doc) => doc.data()));
+      });
+    }
+    fetchData();
+  }, []);
 
   const matchesDocument = [];
-  for (let i = 1; i < 10; i++) {
-    matchesDocument.push(<div className="home-content-matchinfo">aaa</div>);
-  }
+  matches.forEach((match) =>
+    matchesDocument.push(
+      <div className="home-content-matchinfo">{match.black}</div>
+    )
+  );
 
   return (
     <div>
