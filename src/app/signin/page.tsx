@@ -1,15 +1,13 @@
 "use client";
 
-import { GlobalContext } from "@/app/layout";
 import { db } from "@/libs/firebase";
 import "@/styles/global.css";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 export default function Page() {
   const router = useRouter();
-  const [loginUser, setLoginUser] = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     usernameSignup: "",
     passwordSignup: "",
@@ -36,11 +34,7 @@ export default function Page() {
         username: formData.usernameSignup,
         password: formData.passwordSignup,
       });
-      setLoginUser(formData.usernameSignup);
-      sessionStorage.setItem(
-        "gomokuUser",
-        JSON.stringify(formData.usernameSignup)
-      );
+      sessionStorage.setItem("username", formData.usernameSignup);
       router.push("/");
     }
   }
@@ -59,8 +53,7 @@ export default function Page() {
       if (result.password !== formData.passwordSignin) {
         setFormData({ ...formData, ["errorSignin"]: "Password unmatched" });
       } else {
-        setLoginUser(result.username);
-        sessionStorage.setItem("gomokuUser", JSON.stringify(result.username));
+        sessionStorage.setItem("username", result.username);
         router.push("/");
       }
     }
