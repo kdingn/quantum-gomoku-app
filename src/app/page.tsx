@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <div>
-      <div>{username}</div>
+      <div>login : {username}</div>
       <Link href="/match?id=00000">match</Link>
     </div>
   );
