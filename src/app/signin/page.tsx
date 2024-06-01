@@ -19,6 +19,26 @@ export default function Page() {
     errorSignin: null,
   });
 
+  async function signup() {
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, "users"),
+        where("username", "==", formData.usernameSignup)
+      )
+    );
+    if (!querySnapshot.empty) {
+      setFormData({
+        ...formData,
+        ["errorSignup"]: `${formData.usernameSignup} already exists`,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        ["errorSignup"]: "ok",
+      });
+    }
+  }
+
   async function signin() {
     const querySnapshot = await getDocs(
       query(
@@ -45,7 +65,7 @@ export default function Page() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDownSignin = (e) => {
     if (e.key === "Enter") {
       signin();
     }
@@ -57,6 +77,7 @@ export default function Page() {
         <div className="login-form-outline">
           <div>
             <h3>Create Account</h3>
+            <span>{formData.errorSignup}</span>
             <form>
               <input
                 className="login-form-inputtext"
@@ -74,7 +95,7 @@ export default function Page() {
               ></input>
               <br />
               <div className="login-form-inputsubmit">
-                <input type="submit" value="create"></input>
+                <input type="button" value="create" onClick={signup}></input>
               </div>
             </form>
           </div>
@@ -94,12 +115,12 @@ export default function Page() {
               ></input>
               <br />
               <input
-                // type="password"
+                type="password"
                 className="login-form-inputtext"
                 placeholder="password"
                 name="passwordSignin"
                 onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
+                onKeyDown={handleKeyDownSignin}
               ></input>
               <br />
               <div className="login-form-inputsubmit">
