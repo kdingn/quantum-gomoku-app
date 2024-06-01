@@ -25,6 +25,8 @@ body {
   margin: 0 auto;
   background-color: var(--main-color);
   color: var(--sub-color);
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar a {
