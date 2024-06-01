@@ -32,10 +32,6 @@ export default function Page() {
         ["errorSignup"]: `${formData.usernameSignup} already exists`,
       });
     } else {
-      setFormData({
-        ...formData,
-        ["errorSignup"]: "ok",
-      });
       addDoc(collection(db, "users"), {
         username: formData.usernameSignup,
         password: formData.passwordSignup,
