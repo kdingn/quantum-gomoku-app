@@ -156,6 +156,7 @@ body {
   height: 60px;
   outline: solid;
   outline-color: var(--hover-color);
+  outline-width: 2px;
 }
 
 .home-content-matchinfo-timestamp {
