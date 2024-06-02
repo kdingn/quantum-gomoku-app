@@ -144,7 +144,9 @@ body {
 }
 
 .home-content-matches-title {
+  margin-top: 15px;
   text-decoration: underline;
+  margin-bottom: 5px;
 }
 
 .home-content-matchinfo-wrapper {

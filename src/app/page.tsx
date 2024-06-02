@@ -1,7 +1,7 @@
 "use client";
 
 import { db } from "@/libs/firebase";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -26,6 +26,7 @@ export default function Home() {
         <div className="home-content-matchinfo">
           <span className="home-content-matchinfo-timestamp">
             {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+            , #{match.id}
           </span>
           <div className="home-content-matchinfo-title">
             <span className="home-content-matchinfo-player">{match.black}</span>
@@ -52,7 +53,7 @@ export default function Home() {
             <span className="home-content-title">Create Match</span>
           </div>
         </div>
-        <span className="home-content-matches-title">Matches</span>
+        <div className="home-content-matches-title">Matches</div>
       </div>
       <div>{matchesDocument}</div>
     </div>
