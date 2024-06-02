@@ -1,7 +1,15 @@
 "use client";
 
 import { db } from "@/libs/firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  and,
+  collection,
+  onSnapshot,
+  or,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -10,7 +18,17 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const q = query(collection(db, "matches"), orderBy("update", "desc"));
+      const q = query(
+        collection(db, "matches"),
+        or(
+          and(where("status", "==", "open"), where("owner", "==", username)),
+          and(
+            where("status", "==", "progress"),
+            or(where("black", "==", username), where("white", "==", username))
+          )
+        ),
+        orderBy("update", "desc")
+      );
       onSnapshot(q, (querySnapshot) => {
         setMatches(querySnapshot.docs.map((doc) => doc.data()));
       });
@@ -21,21 +39,47 @@ export default function Home() {
   const matchesDocument = [];
   matches.forEach((match) => {
     const date = match.update.toDate();
-    matchesDocument.push(
-      <div className="home-content-matchinfo-wrapper">
-        <div className="home-content-matchinfo">
-          <span className="home-content-matchinfo-timestamp">
-            {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
-            , #{match.id}
-          </span>
-          <div className="home-content-matchinfo-title">
-            <span className="home-content-matchinfo-player">{match.black}</span>
-            <span className="home-content-matchinfo-vs">vs</span>
-            <span className="home-content-matchinfo-player">{match.white}</span>
+    if (match.status === "progress") {
+      matchesDocument.push(
+        <div className="home-content-matchinfo-wrapper" key={match.id}>
+          <div className="home-content-matchinfo-progress">
+            <span className="home-content-matchinfo-timestamp">
+              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+              , #{match.id}
+            </span>
+            <div className="home-content-matchinfo-title">
+              <span className="home-content-matchinfo-player">
+                {match.black}
+              </span>
+              <span className="home-content-matchinfo-vs">vs</span>
+              <span className="home-content-matchinfo-player">
+                {match.white}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      matchesDocument.push(
+        <div className="home-content-matchinfo-wrapper" key={match.id}>
+          <div className="home-content-matchinfo">
+            <span className="home-content-matchinfo-timestamp">
+              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+              , #{match.id}
+            </span>
+            <div className="home-content-matchinfo-title">
+              <span className="home-content-matchinfo-player">
+                {match.black}
+              </span>
+              <span className="home-content-matchinfo-vs">vs</span>
+              <span className="home-content-matchinfo-player">
+                {match.white}
+              </span>
+            </div>
+          </div>
+        </div>
+      );
+    }
   });
 
   return (
