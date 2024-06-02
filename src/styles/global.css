@@ -153,19 +153,11 @@ body {
   padding: 6px;
 }
 
-.home-content-matchinfo-progress {
-  cursor: pointer;
-  height: 60px;
-  outline: solid;
-  outline-color: var(--hover-color);
-  outline-width: 2px;
-}
-
 .home-content-matchinfo {
   cursor: pointer;
   height: 60px;
   outline: solid;
-  outline-color: var(--warn-color);
+  outline-color: var(--hover-color);
   outline-width: 2px;
 }
 

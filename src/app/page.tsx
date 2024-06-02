@@ -11,13 +11,15 @@ import {
   where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import Match from "@/components/match";
 
 export default function Home() {
   const username = sessionStorage.getItem("username");
-  const [matches, setMatches] = useState([]);
+  const [yourMatch, setYourMatch] = useState([]);
+  const [openMatches, setOpenMatches] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchYourMatch() {
       const q = query(
         collection(db, "matches"),
         or(
@@ -26,60 +28,35 @@ export default function Home() {
             where("status", "==", "progress"),
             or(where("black", "==", username), where("white", "==", username))
           )
-        ),
+        )
+      );
+      onSnapshot(q, (querySnapshot) => {
+        setYourMatch(querySnapshot.docs.map((doc) => doc.data()));
+      });
+    }
+    fetchYourMatch();
+
+    async function fetchOpenMatches() {
+      const q = query(
+        collection(db, "matches"),
+        where("status", "==", "open"),
         orderBy("update", "desc")
       );
       onSnapshot(q, (querySnapshot) => {
-        setMatches(querySnapshot.docs.map((doc) => doc.data()));
+        setOpenMatches(querySnapshot.docs.map((doc) => doc.data()));
       });
     }
-    fetchData();
+    fetchOpenMatches();
   }, []);
 
-  const matchesDocument = [];
-  matches.forEach((match) => {
-    const date = match.update.toDate();
-    if (match.status === "progress") {
-      matchesDocument.push(
-        <div className="home-content-matchinfo-wrapper" key={match.id}>
-          <div className="home-content-matchinfo-progress">
-            <span className="home-content-matchinfo-timestamp">
-              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
-              , #{match.id}
-            </span>
-            <div className="home-content-matchinfo-title">
-              <span className="home-content-matchinfo-player">
-                {match.black}
-              </span>
-              <span className="home-content-matchinfo-vs">vs</span>
-              <span className="home-content-matchinfo-player">
-                {match.white}
-              </span>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      matchesDocument.push(
-        <div className="home-content-matchinfo-wrapper" key={match.id}>
-          <div className="home-content-matchinfo">
-            <span className="home-content-matchinfo-timestamp">
-              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
-              , #{match.id}
-            </span>
-            <div className="home-content-matchinfo-title">
-              <span className="home-content-matchinfo-player">
-                {match.black}
-              </span>
-              <span className="home-content-matchinfo-vs">vs</span>
-              <span className="home-content-matchinfo-player">
-                {match.white}
-              </span>
-            </div>
-          </div>
-        </div>
-      );
-    }
+  const yourMatchDocument = [];
+  yourMatch.forEach((match) => {
+    yourMatchDocument.push(<Match match={match} key={match.id} />);
+  });
+
+  const openMatchesDocument = [];
+  openMatches.forEach((match) => {
+    openMatchesDocument.push(<Match match={match} key={match.id} />);
   });
 
   return (
@@ -97,9 +74,13 @@ export default function Home() {
             <span className="home-content-title">Create Match</span>
           </div>
         </div>
-        <div className="home-content-matches-title">Matches</div>
+        {yourMatch.length !== 0 && (
+          <div className="home-content-matches-title">Your Match</div>
+        )}
+        <div>{yourMatchDocument}</div>
+        <div className="home-content-matches-title">Open Matches</div>
       </div>
-      <div>{matchesDocument}</div>
+      <div>{openMatchesDocument}</div>
     </div>
   );
 }
