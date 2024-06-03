@@ -20,12 +20,12 @@ export default function Goban() {
     async function fetchData() {
       try {
         if (!matchId) {
-          setError("Match ID is not designated");
+          setError("Match ID is Not Designated");
           return;
         }
         const data = collection(db, `match-${matchId}`);
         if ((await getDocs(data)).empty) {
-          setError("Match is not found");
+          setError("Match Not Found");
           return;
         }
         const q = query(data, orderBy("timestamp", "asc"));
@@ -33,7 +33,7 @@ export default function Goban() {
           setSequence(querySnapshot.docs.map((doc) => doc.data()));
         });
       } catch (error) {
-        setError("Error occurred in connection");
+        setError("Error Occurred in Connection");
       }
     }
     fetchData();
