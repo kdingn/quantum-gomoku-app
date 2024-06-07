@@ -1,22 +1,48 @@
+import { db } from "@/libs/firebase";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import _ from "lodash";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Match(props) {
   const router = useRouter();
   const match = props.match;
-  const date = match.update.toDate();
+  const users = _.shuffle([
+    sessionStorage.getItem("username"),
+    props.match.owner,
+  ]);
+  const [date, setDate] = useState();
+  useEffect(() => {
+    try {
+      setDate(props.match.update.toDate());
+    } catch {}
+  }, [props]);
 
   function routeMatch() {
     router.push(`/match?id=${match.id}`);
+  }
+
+  function joinMatch() {
+    const docRef = doc(db, "matches", props.docid);
+    updateDoc(docRef, {
+      black: users[0],
+      white: users[1],
+      update: serverTimestamp(),
+      status: "progress",
+    });
+    routeMatch();
   }
 
   return (
     <div className="home-content-matchinfo-wrapper">
       {match.status === "progress" ? (
         <div className="home-content-matchinfo-progress" onClick={routeMatch}>
-          <span className="home-content-matchinfo-timestamp">
-            {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
-            , #{match.id}
-          </span>
+          {date && (
+            <span className="home-content-matchinfo-timestamp">
+              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+              , #{match.id}
+            </span>
+          )}
           <div className="home-content-matchinfo-title">
             <span className="home-content-matchinfo-player">{match.black}</span>
             <span className="home-content-matchinfo-vs">vs</span>
@@ -24,11 +50,13 @@ export default function Match(props) {
           </div>
         </div>
       ) : (
-        <div className="home-content-matchinfo-open">
-          <span className="home-content-matchinfo-timestamp">
-            {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
-            , #{match.id}
-          </span>
+        <div className="home-content-matchinfo-open" onClick={joinMatch}>
+          {date && (
+            <span className="home-content-matchinfo-timestamp">
+              {`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
+              , #{match.id}
+            </span>
+          )}
           <div className="home-content-matchinfo-title">
             Join&nbsp;
             <div className="home-content-matchinfo-player-open">

@@ -1,5 +1,6 @@
 "use client";
 
+import Match from "@/components/match";
 import { db } from "@/libs/firebase";
 import {
   and,
@@ -11,7 +12,6 @@ import {
   where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Match from "@/components/match";
 
 export default function Home() {
   const username = sessionStorage.getItem("username");
@@ -31,7 +31,9 @@ export default function Home() {
         )
       );
       onSnapshot(q, (querySnapshot) => {
-        setYourMatch(querySnapshot.docs.map((doc) => doc.data()));
+        setYourMatch(
+          querySnapshot.docs.map((doc) => ({ docid: doc.id, doc: doc.data() }))
+        );
       });
     }
     fetchYourMatch();
@@ -43,7 +45,9 @@ export default function Home() {
         orderBy("update", "desc")
       );
       onSnapshot(q, (querySnapshot) => {
-        setOpenMatches(querySnapshot.docs.map((doc) => doc.data()));
+        setOpenMatches(
+          querySnapshot.docs.map((doc) => ({ docid: doc.id, doc: doc.data() }))
+        );
       });
     }
     fetchOpenMatches();
@@ -51,12 +55,16 @@ export default function Home() {
 
   const yourMatchDocument = [];
   yourMatch.forEach((match) => {
-    yourMatchDocument.push(<Match match={match} key={match.id} />);
+    yourMatchDocument.push(
+      <Match match={match.doc} docid={match.docid} key={match.docid} />
+    );
   });
 
   const openMatchesDocument = [];
   openMatches.forEach((match) => {
-    openMatchesDocument.push(<Match match={match} key={match.id} />);
+    openMatchesDocument.push(
+      <Match match={match.doc} docid={match.docid} key={match.docid} />
+    );
   });
 
   return (
