@@ -3,13 +3,17 @@
 import Match from "@/components/match";
 import { db } from "@/libs/firebase";
 import {
-  and,
   collection,
   onSnapshot,
+  addDoc,
+  updateDoc,
+  doc,
+  and,
   or,
   orderBy,
   query,
   where,
+  serverTimestamp,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -18,6 +22,7 @@ export default function Home() {
   const [openMatches, setOpenMatches] = useState([]);
   const [yourMatch, setYourMatch] = useState([]);
   const [isYouHaveMatch, setIsYouHaveMatch] = useState(false);
+  const [maxMatchId, setMaxMatchId] = useState();
 
   useEffect(() => {
     async function fetchYourMatch() {
@@ -52,6 +57,15 @@ export default function Home() {
       });
     }
     fetchOpenMatches();
+
+    async function fetchMaxMatchId() {
+      const docRef = doc(db, "variables", "max-match-id");
+      onSnapshot(docRef, (docSnapshot) => {
+        const data = docSnapshot.data();
+        setMaxMatchId(data.value);
+      });
+    }
+    fetchMaxMatchId();
   }, []);
 
   useEffect(() => {
@@ -82,6 +96,26 @@ export default function Home() {
     );
   });
 
+  function createMatch() {
+    if (isYouHaveMatch) {
+      alert("You already have or be in a match.");
+    } else {
+      const newDoc = {
+        owner: username,
+        black: "",
+        white: "",
+        win: "",
+        status: "open",
+        create: serverTimestamp(),
+        update: serverTimestamp(),
+        id: maxMatchId + 1,
+      };
+      addDoc(collection(db, "matches"), newDoc);
+      const docRef = doc(db, "variables", "max-match-id");
+      updateDoc(docRef, { value: maxMatchId + 1 });
+    }
+  }
+
   return (
     <div>
       <div className="fixed-contents">
@@ -92,7 +126,7 @@ export default function Home() {
             <span className="home-content-title">Play Game with AI</span>
           </div>
         </div>
-        <div className="home-content">
+        <div className="home-content" onClick={createMatch}>
           <div className="home-content-center">
             <span className="home-content-title">Create Match</span>
           </div>
