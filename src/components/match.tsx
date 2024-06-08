@@ -23,14 +23,18 @@ export default function Match(props) {
   }
 
   function joinMatch() {
-    const docRef = doc(db, "matches", props.docid);
-    updateDoc(docRef, {
-      black: users[0],
-      white: users[1],
-      update: serverTimestamp(),
-      status: "progress",
-    });
-    routeMatch();
+    if (props.isYouHaveMatch) {
+      alert("You already have or be in a match.");
+    } else {
+      const docRef = doc(db, "matches", props.docid);
+      updateDoc(docRef, {
+        black: users[0],
+        white: users[1],
+        update: serverTimestamp(),
+        status: "progress",
+      });
+      routeMatch();
+    }
   }
 
   return (

@@ -15,8 +15,9 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const username = sessionStorage.getItem("username");
-  const [yourMatch, setYourMatch] = useState([]);
   const [openMatches, setOpenMatches] = useState([]);
+  const [yourMatch, setYourMatch] = useState([]);
+  const [isYouHaveMatch, setIsYouHaveMatch] = useState(false);
 
   useEffect(() => {
     async function fetchYourMatch() {
@@ -53,17 +54,31 @@ export default function Home() {
     fetchOpenMatches();
   }, []);
 
+  useEffect(() => {
+    setIsYouHaveMatch(yourMatch.length !== 0);
+  }, [yourMatch]);
+
   const yourMatchDocument = [];
   yourMatch.forEach((match) => {
     yourMatchDocument.push(
-      <Match match={match.doc} docid={match.docid} key={match.docid} />
+      <Match
+        match={match.doc}
+        docid={match.docid}
+        isYouHaveMatch={isYouHaveMatch}
+        key={match.docid}
+      />
     );
   });
 
   const openMatchesDocument = [];
   openMatches.forEach((match) => {
     openMatchesDocument.push(
-      <Match match={match.doc} docid={match.docid} key={match.docid} />
+      <Match
+        match={match.doc}
+        docid={match.docid}
+        isYouHaveMatch={isYouHaveMatch}
+        key={match.docid}
+      />
     );
   });
 
