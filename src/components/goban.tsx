@@ -6,7 +6,6 @@ import {
   collection,
   onSnapshot,
   query,
-  serverTimestamp,
   where,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
