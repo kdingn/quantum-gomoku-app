@@ -9,14 +9,13 @@ import {
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function Match(props) {
+  const username = sessionStorage.getItem("username");
   const router = useRouter();
   const match = props.match;
-  const users = _.shuffle([
-    sessionStorage.getItem("username"),
-    props.match.owner,
-  ]);
+  const users = _.shuffle([username, props.match.owner]);
   const [date, setDate] = useState();
   useEffect(() => {
     try {
@@ -82,6 +81,11 @@ export default function Match(props) {
               {match.owner}
             </div>
             &apos;s match
+            {username === props.match.owner && (
+              <div className="home-content-matchinfo-button">
+                <CancelIcon />
+              </div>
+            )}
           </div>
         </div>
       )}
