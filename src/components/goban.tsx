@@ -1,7 +1,8 @@
 import Gotile from "@/components/gotile";
 import { db } from "@/libs/firebase";
 import {
-  addDoc,
+  doc,
+  updateDoc,
   collection,
   onSnapshot,
   query,
@@ -15,6 +16,7 @@ export default function Goban() {
   const [positionProbMap, setPositionProbMap] = useState({});
   const [sequence, setSequence] = useState();
   const [error, setError] = useState(null);
+  const [docid, setDocid] = useState();
   const matchId = useSearchParams().get("id");
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +31,9 @@ export default function Goban() {
           where("id", "==", Number(matchId))
         );
         onSnapshot(q, (querySnapshot) => {
-          setSequence(querySnapshot.docs.map((doc) => doc.data())[0]);
+          const docRef = querySnapshot.docs[0];
+          setSequence(docRef.data());
+          setDocid(docRef.id);
         });
       } catch (error) {
         setError("Error Occurred in Connection");
@@ -59,15 +63,18 @@ export default function Goban() {
     30: 70,
   };
   function addSequence(vindex, hindex) {
-    const lastProb = sequence.length !== 0 ? sequence.slice(-1)[0]["prob"] : 30;
-    const newPoint = {
-      i: vindex,
-      j: hindex,
-      prob: nextProbDict[lastProb],
-      timestamp: serverTimestamp(),
-    };
-    setSequence([...sequence, newPoint]);
-    addDoc(collection(db, `match-${matchId}`), newPoint);
+    const lastProb =
+      sequence.probability.length !== 0
+        ? sequence.probability.slice(-1)[0]
+        : 30;
+    const timestamp = Date.now();
+    const docRef = doc(db, "sequences", docid);
+    updateDoc(docRef, {
+      i: [...sequence.i, vindex],
+      j: [...sequence.j, hindex],
+      probability: [...sequence.probability, nextProbDict[lastProb]],
+      timestamp: [...sequence.timestamp, timestamp],
+    });
   }
 
   const gobanSize = 13;
