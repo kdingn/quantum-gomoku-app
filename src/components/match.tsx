@@ -1,5 +1,11 @@
 import { db } from "@/libs/firebase";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,6 +39,15 @@ export default function Match(props) {
         update: serverTimestamp(),
         status: "progress",
       });
+
+      addDoc(collection(db, "sequences"), {
+        id: match.id,
+        i: [],
+        j: [],
+        probability: [],
+        timestamp: [],
+      });
+
       routeMatch();
     }
   }
