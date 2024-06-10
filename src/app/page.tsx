@@ -98,7 +98,7 @@ export default function Home() {
 
   function createMatch() {
     if (isYouHaveMatch) {
-      alert("You already have or be in a match.");
+      alert("You are already in or own a match.");
     } else {
       const newDoc = {
         owner: username,
