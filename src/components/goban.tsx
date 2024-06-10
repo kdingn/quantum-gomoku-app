@@ -12,7 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Goban() {
-  const [sequence, setSequence] = useState([]);
+  const [sequence, setSequence] = useState();
   const [error, setError] = useState(null);
   const matchId = useSearchParams().get("id");
   useEffect(() => {
@@ -28,19 +28,8 @@ export default function Goban() {
           where("id", "==", Number(matchId))
         );
         onSnapshot(q, (querySnapshot) => {
-          // const res = querySnapshot.docs.map((doc) => doc.data());
-          // setSequence(res);
-          setSequence(querySnapshot.docs.map((doc) => doc.data()));
+          setSequence(querySnapshot.docs.map((doc) => doc.data())[0]);
         });
-
-        // if ((await getDocs(data)).empty) {
-        //   setError("Match Not Found");
-        //   return;
-        // }
-        // const q = query(data, orderBy("timestamp", "asc"));
-        // onSnapshot(q, (querySnapshot) => {
-        //   setSequence(querySnapshot.docs.map((doc) => doc.data()));
-        // });
       } catch (error) {
         setError("Error Occurred in Connection");
       }
