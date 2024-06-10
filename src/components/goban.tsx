@@ -3,11 +3,10 @@ import { db } from "@/libs/firebase";
 import {
   addDoc,
   collection,
-  getDocs,
   onSnapshot,
-  orderBy,
   query,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,15 +22,25 @@ export default function Goban() {
           setError("Match ID is Not Designated");
           return;
         }
-        const data = collection(db, `match-${matchId}`);
-        if ((await getDocs(data)).empty) {
-          setError("Match Not Found");
-          return;
-        }
-        const q = query(data, orderBy("timestamp", "asc"));
+
+        const q = query(
+          collection(db, "sequences"),
+          where("id", "==", Number(matchId))
+        );
         onSnapshot(q, (querySnapshot) => {
+          // const res = querySnapshot.docs.map((doc) => doc.data());
+          // setSequence(res);
           setSequence(querySnapshot.docs.map((doc) => doc.data()));
         });
+
+        // if ((await getDocs(data)).empty) {
+        //   setError("Match Not Found");
+        //   return;
+        // }
+        // const q = query(data, orderBy("timestamp", "asc"));
+        // onSnapshot(q, (querySnapshot) => {
+        //   setSequence(querySnapshot.docs.map((doc) => doc.data()));
+        // });
       } catch (error) {
         setError("Error Occurred in Connection");
       }
@@ -89,6 +98,7 @@ export default function Goban() {
 
   return (
     <table className="goban">
+      {sequence}
       <tbody>{gobanDocument}</tbody>
     </table>
   );
