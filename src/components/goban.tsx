@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Goban() {
+  const [positionProbMap, setPositionProbMap] = useState({});
   const [sequence, setSequence] = useState();
   const [error, setError] = useState(null);
   const matchId = useSearchParams().get("id");
@@ -40,11 +41,16 @@ export default function Goban() {
     return <div>{error}</div>;
   }
 
-  const positionProbMap = {};
-  sequence.forEach((item) => {
-    const key = `${item.i}-${item.j}`;
-    positionProbMap[key] = item.prob;
-  });
+  useEffect(() => {
+    if (sequence) {
+      const map = {};
+      for (let n = 0; n < sequence.probability.length; n++) {
+        const key = `${sequence.i[n]}-${sequence.j[n]}`;
+        map[key] = sequence.probability[n];
+      }
+      setPositionProbMap(map);
+    }
+  }, [sequence]);
 
   const nextProbDict = {
     70: 10,
@@ -87,7 +93,6 @@ export default function Goban() {
 
   return (
     <table className="goban">
-      {sequence}
       <tbody>{gobanDocument}</tbody>
     </table>
   );
