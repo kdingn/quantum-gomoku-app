@@ -1,7 +1,9 @@
 import { db } from "@/libs/firebase";
+import CancelIcon from "@mui/icons-material/Cancel";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   serverTimestamp,
   updateDoc,
@@ -9,7 +11,6 @@ import {
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function Match(props) {
   const username = sessionStorage.getItem("username");
@@ -51,6 +52,11 @@ export default function Match(props) {
     }
   }
 
+  function deleteMatch(e) {
+    deleteDoc(doc(db, "matches", props.docid));
+    e.stopPropagation();
+  }
+
   return (
     <div className="home-content-matchinfo-wrapper">
       {match.status === "progress" ? (
@@ -82,7 +88,10 @@ export default function Match(props) {
             </div>
             &apos;s match
             {username === props.match.owner && (
-              <div className="home-content-matchinfo-button">
+              <div
+                className="home-content-matchinfo-button"
+                onClick={deleteMatch}
+              >
                 <CancelIcon />
               </div>
             )}
