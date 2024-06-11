@@ -3,17 +3,17 @@
 import Match from "@/components/match";
 import { db } from "@/libs/firebase";
 import {
-  collection,
-  onSnapshot,
   addDoc,
-  updateDoc,
-  doc,
   and,
+  collection,
+  doc,
+  onSnapshot,
   or,
   orderBy,
   query,
-  where,
   serverTimestamp,
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -23,6 +23,7 @@ export default function Home() {
   const [yourMatch, setYourMatch] = useState([]);
   const [isYouHaveMatch, setIsYouHaveMatch] = useState(false);
   const [maxMatchId, setMaxMatchId] = useState();
+  const [standardMessage, setStandardMessage] = useState("");
 
   useEffect(() => {
     async function fetchYourMatch() {
@@ -71,6 +72,14 @@ export default function Home() {
   useEffect(() => {
     setIsYouHaveMatch(yourMatch.length !== 0);
   }, [yourMatch]);
+
+  useEffect(() => {
+    if (openMatches.length === 0) {
+      setStandardMessage("There are no open match.");
+    } else {
+      setStandardMessage("");
+    }
+  }, [openMatches]);
 
   const yourMatchDocument = [];
   yourMatch.forEach((match) => {
@@ -138,6 +147,7 @@ export default function Home() {
         <div className="home-content-matches-title">Open Matches</div>
       </div>
       <div>{openMatchesDocument}</div>
+      <div className="home-content-standard-message">{standardMessage}</div>
     </div>
   );
 }
