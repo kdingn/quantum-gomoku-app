@@ -75,7 +75,7 @@ export default function Home() {
 
   useEffect(() => {
     if (openMatches.length === 0) {
-      setStandardMessage("There are no open match.");
+      setStandardMessage("No Match Found");
     } else {
       setStandardMessage("");
     }
