@@ -211,3 +211,23 @@ body {
 .home-content-standard-message {
   text-align: center;
 }
+
+.match-player-names {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.match-player-names h3 {
+  margin: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: x-large;
+}
+
+.match-player-name-content {
+  display: flex;
+  align-items: flex-end;
+}
