@@ -82,6 +82,7 @@ export default function Page() {
                 placeholder="username"
                 name="usernameSignup"
                 onChange={handleInputChange}
+                maxLength={10}
               ></input>
               <br />
               <input
