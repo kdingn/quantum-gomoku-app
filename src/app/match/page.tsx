@@ -114,8 +114,14 @@ export default function Home() {
             ></GoStone>
           </div>
         </div>
-        <div className="match-function-large">aaa</div>
-        <div className="match-function-small">aaa</div>
+        <div className="match-function-large">
+          <div className="match-function-measure">
+            <h3>Measure Stones</h3>
+          </div>
+        </div>
+        <div className="match-function-small">
+          <div className="match-function-surrender">Surrender</div>
+        </div>
       </div>
     </div>
   );

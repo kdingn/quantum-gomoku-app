@@ -130,7 +130,7 @@ export default function Home() {
       <div className="fixed-contents">
         <div>login : {username}</div>
         <div className="home-content">
-          <span className="home-content-description">*now in preparing...</span>
+          <span className="home-content-description">*unavailable now...</span>
           <div className="home-content-center">
             <span className="home-content-title">Play Game with AI</span>
           </div>

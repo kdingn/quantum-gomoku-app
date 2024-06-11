@@ -85,12 +85,18 @@ export default function Goban() {
       const prob = positionProbMap[key] || null;
       gobanRow.push(
         <td key={j}>
-          <div
-            className="goban-tile"
-            onClick={prob === null ? () => addSequence(i, j) : () => null}
-          >
-            <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
-          </div>
+          {prob === null ? (
+            <div
+              className="goban-tile-cursor"
+              onClick={() => addSequence(i, j)}
+            >
+              <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
+            </div>
+          ) : (
+            <div className="goban-tile">
+              <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
+            </div>
+          )}
         </td>
       );
     }
