@@ -11,7 +11,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Goban() {
+export default function Goban(props) {
   const [positionProbMap, setPositionProbMap] = useState({});
   const [sequence, setSequence] = useState();
   const [error, setError] = useState(null);
@@ -62,18 +62,20 @@ export default function Goban() {
     30: 70,
   };
   function addSequence(vindex, hindex) {
-    const lastProb =
-      sequence.probability.length !== 0
-        ? sequence.probability.slice(-1)[0]
-        : 30;
-    const timestamp = Date.now();
-    const docRef = doc(db, "sequences", docid);
-    updateDoc(docRef, {
-      i: [...sequence.i, vindex],
-      j: [...sequence.j, hindex],
-      probability: [...sequence.probability, nextProbDict[lastProb]],
-      timestamp: [...sequence.timestamp, timestamp],
-    });
+    if (props.yourTurn) {
+      const lastProb =
+        sequence.probability.length !== 0
+          ? sequence.probability.slice(-1)[0]
+          : 30;
+      const timestamp = Date.now();
+      const docRef = doc(db, "sequences", docid);
+      updateDoc(docRef, {
+        i: [...sequence.i, vindex],
+        j: [...sequence.j, hindex],
+        probability: [...sequence.probability, nextProbDict[lastProb]],
+        timestamp: [...sequence.timestamp, timestamp],
+      });
+    }
   }
 
   const gobanSize = 13;

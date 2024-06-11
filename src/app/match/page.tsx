@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const size = 28;
   const matchId = useSearchParams().get("id");
+  const username = sessionStorage.getItem("username");
   const [blackPlayer, setBlackPlayer] = useState("");
   const [whitePlayer, setWhitePlayer] = useState("");
   const [blackColor, setBlackColor] = useState("");
@@ -24,6 +25,7 @@ export default function Home() {
   const [nextProbability, setNextProbability] = useState(70);
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
+  const [yourTurn, setYourTurn] = useState(false);
 
   const nextProbDict = {
     70: 10,
@@ -72,9 +74,19 @@ export default function Home() {
     if (nextProbability > 50) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
+      if (username == blackPlayer) {
+        setYourTurn(true);
+      } else {
+        setYourTurn(false);
+      }
     } else {
       setNextStoneColor(rootStyles.getPropertyValue("--white-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--black-color").trim());
+      if (username == whitePlayer) {
+        setYourTurn(true);
+      } else {
+        setYourTurn(false);
+      }
     }
   }, [nextProbability]);
 
@@ -99,7 +111,7 @@ export default function Home() {
         </div>
       </div>
       <div className="goban-container">
-        <Goban />
+        <Goban yourTurn={yourTurn} />
       </div>
       <div className="match-functions">
         <div className="match-function-small">
