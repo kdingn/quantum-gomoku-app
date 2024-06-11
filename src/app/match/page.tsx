@@ -74,7 +74,7 @@ export default function Home() {
     if (nextProbability > 50) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
-      if (username == blackPlayer) {
+      if (username === blackPlayer) {
         setYourTurn(true);
       } else {
         setYourTurn(false);
@@ -82,13 +82,13 @@ export default function Home() {
     } else {
       setNextStoneColor(rootStyles.getPropertyValue("--white-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--black-color").trim());
-      if (username == whitePlayer) {
+      if (username === whitePlayer) {
         setYourTurn(true);
       } else {
         setYourTurn(false);
       }
     }
-  }, [nextProbability]);
+  }, [blackPlayer, whitePlayer, nextProbability]);
 
   return (
     <div>
