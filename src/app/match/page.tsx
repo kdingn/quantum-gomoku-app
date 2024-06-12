@@ -12,10 +12,9 @@ import {
   onSnapshot,
   updateDoc,
   doc,
-  serverTimestamp,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const size = 28;
@@ -104,9 +103,14 @@ export default function Home() {
       const opponent = username === blackPlayer ? whitePlayer : blackPlayer;
       updateDoc(docRef, {
         win: opponent,
-        update: serverTimestamp(),
         status: "close",
       });
+    }
+  }
+
+  function clickMeasure() {
+    if (yourTurn) {
+      console.log("aaa");
     }
   }
 
@@ -154,7 +158,7 @@ export default function Home() {
           </div>
         </div>
         <div className="match-function-large">
-          <div className="match-function-measure">
+          <div className="match-function-measure" onClick={clickMeasure}>
             <h3>Measure Stones</h3>
           </div>
         </div>
