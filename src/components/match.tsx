@@ -5,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import _ from "lodash";
@@ -36,7 +35,6 @@ export default function Match(props) {
       updateDoc(docRef, {
         black: users[0],
         white: users[1],
-        update: serverTimestamp(),
         status: "progress",
       });
 
