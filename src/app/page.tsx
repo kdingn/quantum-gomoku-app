@@ -49,7 +49,7 @@ export default function Home() {
       const q = query(
         collection(db, "matches"),
         where("status", "==", "open"),
-        orderBy("update", "desc")
+        orderBy("create", "desc")
       );
       onSnapshot(q, (querySnapshot) => {
         setOpenMatches(
@@ -116,8 +116,13 @@ export default function Home() {
         win: "",
         status: "open",
         create: serverTimestamp(),
-        update: serverTimestamp(),
         id: maxMatchId + 1,
+        blackMeasure: 0,
+        whiteMeasure: 0,
+        measuring: "",
+        measuredI: [],
+        measuredJ: [],
+        measuredValue: [],
       };
       addDoc(collection(db, "matches"), newDoc);
       const docRef = doc(db, "variables", "max-match-id");
