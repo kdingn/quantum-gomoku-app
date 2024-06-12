@@ -10,9 +10,12 @@ import {
   query,
   where,
   onSnapshot,
+  updateDoc,
+  doc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export default function Home() {
   const size = 28;
@@ -26,6 +29,9 @@ export default function Home() {
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
   const [yourTurn, setYourTurn] = useState(false);
+  const [winner, setWinner] = useState("");
+  const [matchDocId, setMatchDocId] = useState("");
+  const [showWinner, setShowWinner] = useState(true);
 
   const nextProbDict = {
     70: 10,
@@ -48,6 +54,8 @@ export default function Home() {
         querySnapshot.forEach((doc) => {
           setBlackPlayer(doc.data().black);
           setWhitePlayer(doc.data().white);
+          setWinner(doc.data().win);
+          setMatchDocId(doc.id);
         });
       });
     }
@@ -74,7 +82,7 @@ export default function Home() {
     if (nextProbability > 50) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
-      if (username === blackPlayer) {
+      if (username === blackPlayer && winner === "") {
         setYourTurn(true);
       } else {
         setYourTurn(false);
@@ -82,7 +90,7 @@ export default function Home() {
     } else {
       setNextStoneColor(rootStyles.getPropertyValue("--white-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--black-color").trim());
-      if (username === whitePlayer) {
+      if (username === whitePlayer && winner === "") {
         setYourTurn(true);
       } else {
         setYourTurn(false);
@@ -90,8 +98,27 @@ export default function Home() {
     }
   }, [blackPlayer, whitePlayer, nextProbability]);
 
+  function clickSurrender() {
+    if (yourTurn) {
+      const docRef = doc(db, "matches", matchDocId);
+      const opponent = username === blackPlayer ? whitePlayer : blackPlayer;
+      updateDoc(docRef, {
+        win: opponent,
+        update: serverTimestamp(),
+        status: "close",
+      });
+    }
+  }
+
   return (
     <div>
+      {winner !== "" && showWinner && (
+        <div className="show-winner-cotainer">
+          <div className="show-winner" onClick={() => setShowWinner(false)}>
+            <div className="show-winner-text">WINNER : {winner}</div>
+          </div>
+        </div>
+      )}
       <div className="match-player-names">
         <div className="match-player-name-content">
           <GoStone
@@ -132,7 +159,9 @@ export default function Home() {
           </div>
         </div>
         <div className="match-function-small">
-          <div className="match-function-surrender">Surrender</div>
+          <div className="match-function-surrender" onClick={clickSurrender}>
+            Surrender
+          </div>
         </div>
       </div>
     </div>

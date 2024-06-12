@@ -312,3 +312,31 @@ body {
   border: 1px solid var(--main-color);
   border-radius: 5px;
 }
+
+.show-winner-cotainer {
+  display: flex;
+  justify-content: center;
+  transition: 0.5s;
+}
+
+.show-winner {
+  position: absolute;
+  margin-top: 10px;
+  width: min(var(--app-width), 90vw);
+  height: 90%;
+  border: 0;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  opacity: 0.9;
+  background-clip: padding-box;
+  z-index: 100;
+}
+
+.show-winner-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  color: var(--white-color);
+  font-size: x-large;
+}
