@@ -121,14 +121,12 @@ export default function Home() {
   }, [match, nextProbability, username]);
 
   function clickSurrender() {
-    if (yourTurn) {
-      const docRef = doc(db, "matches", matchDocId);
-      const opponent = username === match.black ? match.white : match.black;
-      updateDoc(docRef, {
-        win: opponent,
-        status: "close",
-      });
-    }
+    const docRef = doc(db, "matches", matchDocId);
+    const opponent = username === match.black ? match.white : match.black;
+    updateDoc(docRef, {
+      win: opponent,
+      status: "close",
+    });
   }
 
   function clickMeasure() {
