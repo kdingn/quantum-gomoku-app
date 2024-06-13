@@ -22,7 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       router.push("/");
     }
     setLoading(false);
-  }, [pathname]);
+  }, [router, pathname]);
 
   if (loading) {
     return (
