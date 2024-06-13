@@ -28,6 +28,7 @@ export default function Home() {
   const [nextTextColor, setNextTextColor] = useState("");
   const [matchDocId, setMatchDocId] = useState("");
   const [match, setMatch] = useState({ black: "", white: "", win: "" });
+  const [sequence, setSequence] = useState([]);
   const nextProbDict = {
     70: 10,
     10: 90,
@@ -60,6 +61,7 @@ export default function Home() {
         where("id", "==", Number(matchId))
       );
       onSnapshot(q, (querySnapshot) => {
+        setSequence(querySnapshot.docs.map((doc) => doc.data())[0]);
         const probability = querySnapshot.docs.map((doc) => doc.data())[0]
           .probability;
         if (probability.length !== 0) {
@@ -104,7 +106,11 @@ export default function Home() {
 
   function clickMeasure() {
     if (yourTurn) {
-      console.log("aaa");
+      console.log(sequence);
+      // const docRef = doc(db, "matches", matchDocId);
+      // updateDoc(docRef, {
+      //   measuring: username,
+      // });
     }
   }
 
