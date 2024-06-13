@@ -6,6 +6,7 @@ const SvgComponent = ({
   text = "",
   circleColor = "#FFFFFF",
   textColor = "#000000",
+  onlyStone = false,
 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size}>
     <rect width={size} height={size} fill={backgroundColor} />
@@ -19,16 +20,18 @@ const SvgComponent = ({
     {text && (
       <>
         <circle cx="50%" cy="50%" r={size / 2.3} fill={circleColor} />
-        <text
-          x="49%"
-          y="54%"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize={size / 2}
-          fill={textColor}
-        >
-          {text}
-        </text>
+        {!onlyStone && (
+          <text
+            x="49%"
+            y="54%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize={size / 2}
+            fill={textColor}
+          >
+            {text}
+          </text>
+        )}
       </>
     )}
   </svg>

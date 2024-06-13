@@ -92,11 +92,23 @@ export default function Goban(props: { yourTurn: boolean }) {
               className="goban-tile-cursor"
               onClick={() => addSequence(i, j)}
             >
-              <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
+              <Gotile
+                vindex={i}
+                hindex={j}
+                gobanSize={gobanSize}
+                prob={prob}
+                onlyStone={false}
+              />
             </div>
           ) : (
             <div className="goban-tile">
-              <Gotile vindex={i} hindex={j} gobanSize={gobanSize} prob={prob} />
+              <Gotile
+                vindex={i}
+                hindex={j}
+                gobanSize={gobanSize}
+                prob={prob}
+                onlyStone={false}
+              />
             </div>
           )}
         </td>

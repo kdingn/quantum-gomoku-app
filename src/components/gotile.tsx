@@ -14,6 +14,7 @@ export default function Gotile(props: {
   hindex: number;
   gobanSize: number;
   prob: number | null;
+  onlyStone: boolean;
 }) {
   const defaultTileSize = 40;
 
@@ -59,6 +60,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.vindex === 1 && props.hindex === props.gobanSize) {
@@ -70,6 +72,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.vindex === props.gobanSize && props.hindex === 1) {
@@ -81,6 +84,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (
@@ -95,6 +99,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.vindex === 1) {
@@ -106,6 +111,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.hindex === 1) {
@@ -117,6 +123,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.hindex === props.gobanSize) {
@@ -128,6 +135,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else if (props.vindex === props.gobanSize) {
@@ -139,6 +147,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   } else {
@@ -150,6 +159,7 @@ export default function Gotile(props: {
         text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
+        onlyStone={props.onlyStone}
       />
     );
   }

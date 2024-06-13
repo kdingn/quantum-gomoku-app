@@ -1,6 +1,7 @@
 "use client";
 
 import Goban from "@/components/goban";
+import Measured from "@/components/measured";
 import GoStone from "@/components/goicons/go_stone";
 
 import { db } from "@/libs/firebase";
@@ -11,17 +12,19 @@ import {
   query,
   updateDoc,
   where,
+  DocumentData,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface Match {
-  black: string;
-  white: string;
-  win: string;
-  blackMeasure: number;
-  whiteMeasure: number;
-}
+// interface Match {
+//   black: string;
+//   white: string;
+//   win: string;
+//   blackMeasure: number;
+//   whiteMeasure: number;
+//   measuring: string;
+// }
 
 export default function Home() {
   const size = 50;
@@ -35,14 +38,23 @@ export default function Home() {
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
   const [matchDocId, setMatchDocId] = useState("");
-  const [match, setMatch] = useState<Match>({
+  const [match, setMatch] = useState<DocumentData>({
     black: "",
     white: "",
     win: "",
     blackMeasure: 0,
     whiteMeasure: 0,
+    measuring: "",
   });
-  const [sequence, setSequence] = useState<any>();
+  // const [match, setMatch] = useState<Match>({
+  //   black: "",
+  //   white: "",
+  //   win: "",
+  //   blackMeasure: 0,
+  //   whiteMeasure: 0,
+  //   measuring: "",
+  // });
+  const [sequence, setSequence] = useState<DocumentData>();
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -56,15 +68,7 @@ export default function Home() {
       );
       onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          const matchData = {
-            black: data.black,
-            white: data.white,
-            win: data.win,
-            blackMeasure: data.blackMeasure,
-            whiteMeasure: data.whiteMeasure,
-          };
-          setMatch(matchData);
+          setMatch(doc.data());
           setMatchDocId(doc.id);
         });
       });
@@ -128,12 +132,22 @@ export default function Home() {
   }
 
   function clickMeasure() {
-    if (yourTurn) {
+    if (yourTurn && sequence) {
       console.log(sequence);
-      // const docRef = doc(db, "matches", matchDocId);
-      // updateDoc(docRef, {
-      //   measuring: username,
-      // });
+      const docRef = doc(db, "matches", matchDocId);
+      updateDoc(docRef, {
+        measuring: username,
+        measuredValue: sequence.probability.map((x: number) =>
+          x < Math.random() * 100 ? 1 : 99
+        ),
+        measuredI: sequence.i,
+        measuredJ: sequence.j,
+      });
+      if (username === match.black) {
+        updateDoc(docRef, { blackMeasure: match.blackMeasure + 1 });
+      } else {
+        updateDoc(docRef, { whiteMeasure: match.whiteMeasure + 1 });
+      }
     }
   }
 
@@ -171,7 +185,8 @@ export default function Home() {
         </div>
       </div>
       <div className="goban-container">
-        <Goban yourTurn={yourTurn} />
+        {match.measuring ? <Goban yourTurn={yourTurn} /> : <Measured />}
+        <Measured></Measured>
       </div>
       <div className="match-functions">
         <div className="match-function-small">
