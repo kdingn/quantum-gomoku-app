@@ -251,7 +251,8 @@ body {
 
 .match-player-name-content {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  /* align-items: flex-end; */
 }
 
 .match-functions {
@@ -339,4 +340,8 @@ body {
   height: 90%;
   color: var(--white-color);
   font-size: x-large;
+}
+
+.measure-num {
+  font-size: small;
 }

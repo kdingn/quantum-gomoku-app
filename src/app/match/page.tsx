@@ -19,10 +19,12 @@ interface Match {
   black: string;
   white: string;
   win: string;
+  blackMeasure: number;
+  whiteMeasure: number;
 }
 
 export default function Home() {
-  const size = 28;
+  const size = 40;
   const matchId = useSearchParams().get("id");
   const username = sessionStorage.getItem("username");
   const [blackColor, setBlackColor] = useState("");
@@ -33,7 +35,13 @@ export default function Home() {
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
   const [matchDocId, setMatchDocId] = useState("");
-  const [match, setMatch] = useState<Match>({ black: "", white: "", win: "" });
+  const [match, setMatch] = useState<Match>({
+    black: "",
+    white: "",
+    win: "",
+    blackMeasure: 0,
+    whiteMeasure: 0,
+  });
   const [sequence, setSequence] = useState<any>();
 
   useEffect(() => {
@@ -53,6 +61,8 @@ export default function Home() {
             black: data.black,
             white: data.white,
             win: data.win,
+            blackMeasure: data.blackMeasure,
+            whiteMeasure: data.whiteMeasure,
           };
           setMatch(matchData);
           setMatchDocId(doc.id);
@@ -143,10 +153,16 @@ export default function Home() {
             outlineColor={blackColor}
             circleColor={blackColor}
           />
-          <h3>{match.black}</h3>
+          <div>
+            <h3>{match.black}</h3>
+            <span className="measure-num">measure: {match.blackMeasure}/2</span>
+          </div>
         </div>
         <div className="match-player-name-content">
-          <h3>{match.white}</h3>
+          <div>
+            <h3>{match.white}</h3>
+            <span className="measure-num">measure: {match.whiteMeasure}/2</span>
+          </div>
           <GoStone
             size={size}
             outlineColor={blackColor}
@@ -162,7 +178,7 @@ export default function Home() {
           <div className="match-function-next">next</div>
           <div className="match-function-next-content">
             <GoStone
-              size={size * 2}
+              size={size * 1.5}
               text={String(nextProbability)}
               outlineColor={blackColor}
               circleColor={nextStoneColor}
