@@ -17,15 +17,6 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// interface Match {
-//   black: string;
-//   white: string;
-//   win: string;
-//   blackMeasure: number;
-//   whiteMeasure: number;
-//   measuring: string;
-// }
-
 export default function Home() {
   const size = 50;
   const matchId = useSearchParams().get("id");
@@ -46,14 +37,6 @@ export default function Home() {
     whiteMeasure: 0,
     measuring: "",
   });
-  // const [match, setMatch] = useState<Match>({
-  //   black: "",
-  //   white: "",
-  //   win: "",
-  //   blackMeasure: 0,
-  //   whiteMeasure: 0,
-  //   measuring: "",
-  // });
   const [sequence, setSequence] = useState<DocumentData>();
 
   useEffect(() => {
