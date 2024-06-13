@@ -132,22 +132,39 @@ export default function Home() {
   }
 
   function clickMeasure() {
+    const isYoureBlack = username === match.black;
+    if (
+      (isYoureBlack && match.blackMeasure < 2) ||
+      (!isYoureBlack && match.whiteMeasure < 2)
+    ) {
+      if (yourTurn && sequence) {
+        const docRef = doc(db, "matches", matchDocId);
+        updateDoc(docRef, {
+          measuring: username,
+          measuredValue: sequence.probability.map((x: number) =>
+            x < Math.random() * 100 ? 1 : 99
+          ),
+          measuredI: sequence.i,
+          measuredJ: sequence.j,
+        });
+        if (isYoureBlack) {
+          updateDoc(docRef, { blackMeasure: match.blackMeasure + 1 });
+        } else {
+          updateDoc(docRef, { whiteMeasure: match.whiteMeasure + 1 });
+        }
+      }
+    }
+  }
+
+  function clickBack() {
     if (yourTurn && sequence) {
-      console.log(sequence);
       const docRef = doc(db, "matches", matchDocId);
       updateDoc(docRef, {
-        measuring: username,
-        measuredValue: sequence.probability.map((x: number) =>
-          x < Math.random() * 100 ? 1 : 99
-        ),
-        measuredI: sequence.i,
-        measuredJ: sequence.j,
+        measuring: "",
+        measuredValue: [],
+        measuredI: [],
+        measuredJ: [],
       });
-      if (username === match.black) {
-        updateDoc(docRef, { blackMeasure: match.blackMeasure + 1 });
-      } else {
-        updateDoc(docRef, { whiteMeasure: match.whiteMeasure + 1 });
-      }
     }
   }
 
@@ -185,8 +202,7 @@ export default function Home() {
         </div>
       </div>
       <div className="goban-container">
-        {match.measuring ? <Goban yourTurn={yourTurn} /> : <Measured />}
-        <Measured></Measured>
+        {match.measuring === "" ? <Goban yourTurn={yourTurn} /> : <Measured />}
       </div>
       <div className="match-functions">
         <div className="match-function-small">
@@ -204,9 +220,18 @@ export default function Home() {
           </div>
         </div>
         <div className="match-function-large">
-          <div className="match-function-measure" onClick={clickMeasure}>
-            <h3>Measure Stones</h3>
-          </div>
+          {match.measuring === "" ? (
+            <div className="match-function-measure" onClick={clickMeasure}>
+              <h3>Measure Stones</h3>
+            </div>
+          ) : (
+            <div className="match-function-measure" onClick={clickBack}>
+              <h3>
+                Back to <br />
+                Quantum Field
+              </h3>
+            </div>
+          )}
         </div>
         <div className="match-function-small">
           <div className="match-function-surrender" onClick={clickSurrender}>
