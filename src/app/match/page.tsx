@@ -37,6 +37,10 @@ export default function Home() {
     whiteMeasure: 0,
     measuring: "",
   });
+  const [positionProbMap, setPositionProbMap] = useState<{
+    [key: string]: number;
+  }>({});
+
   const [sequence, setSequence] = useState<DocumentData>();
 
   useEffect(() => {
@@ -101,7 +105,116 @@ export default function Home() {
         setYourTurn(false);
       }
     }
+
+    if (match.measuring !== "") {
+      if (
+        match.blackMeasure === 2 &&
+        match.whiteMeasure === 2 &&
+        match.win === ""
+      ) {
+        const docRef = doc(db, "matches", matchDocId);
+        updateDoc(docRef, {
+          win: match.white,
+          status: "close",
+        });
+      } else {
+        const map: { [key: string]: number } = {};
+        for (let n = 0; n < match.measuredValue.length; n++) {
+          const key = `${match.measuredI[n]}-${match.measuredJ[n]}`;
+          map[key] = match.measuredValue[n];
+        }
+        setPositionProbMap(map);
+      }
+    }
   }, [match, nextProbability, username]);
+
+  const checkWinCondition = (
+    x: number,
+    y: number,
+    color: number,
+    board: { [key: string]: number }
+  ) => {
+    const directions = [
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [-1, 1],
+    ];
+    for (const [dx, dy] of directions) {
+      let count = 1;
+      for (let step = 1; step < 5; step++) {
+        const nx = x + dx * step;
+        const ny = y + dy * step;
+        if (board[`${nx}-${ny}`] === color) {
+          count++;
+        } else {
+          break;
+        }
+      }
+      for (let step = 1; step < 5; step++) {
+        const nx = x - dx * step;
+        const ny = y - dy * step;
+        if (board[`${nx}-${ny}`] === color) {
+          count++;
+        } else {
+          break;
+        }
+      }
+      if (count >= 5) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  useEffect(() => {
+    const gobanSize = 13;
+    let whiteWin = false;
+    let blackWin = false;
+    if (match.measuring !== "" && match.win === "") {
+      for (let i = 1; i <= gobanSize; i++) {
+        for (let j = 1; j <= gobanSize; j++) {
+          if (positionProbMap[`${i}-${j}`] === 1) {
+            if (checkWinCondition(i, j, 1, positionProbMap)) {
+              whiteWin = true;
+              break;
+            }
+          }
+        }
+        if (whiteWin) {
+          break;
+        }
+      }
+      for (let i = 1; i <= gobanSize; i++) {
+        for (let j = 1; j <= gobanSize; j++) {
+          if (positionProbMap[`${i}-${j}`] === 99) {
+            if (checkWinCondition(i, j, 99, positionProbMap)) {
+              console.log(i, j);
+              blackWin = true;
+              break;
+            }
+          }
+        }
+        if (blackWin) {
+          break;
+        }
+      }
+    }
+    if (whiteWin) {
+      const docRef = doc(db, "matches", matchDocId);
+      updateDoc(docRef, {
+        win: match.white,
+        status: "close",
+      });
+    } else if (blackWin) {
+      const docRef = doc(db, "matches", matchDocId);
+      updateDoc(docRef, {
+        win: match.black,
+        status: "close",
+      });
+    }
+  }, [positionProbMap]);
 
   function clickSurrender() {
     const docRef = doc(db, "matches", matchDocId);
