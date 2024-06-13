@@ -20,17 +20,19 @@ export default function Home() {
   const size = 28;
   const matchId = useSearchParams().get("id");
   const username = sessionStorage.getItem("username");
-  const [blackPlayer, setBlackPlayer] = useState("");
-  const [whitePlayer, setWhitePlayer] = useState("");
+
   const [blackColor, setBlackColor] = useState("");
   const [whiteColor, setWhiteColor] = useState("");
+  const [showWinner, setShowWinner] = useState(true);
+  const [yourTurn, setYourTurn] = useState(false);
+
   const [nextProbability, setNextProbability] = useState(70);
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
-  const [yourTurn, setYourTurn] = useState(false);
-  const [winner, setWinner] = useState("");
+
   const [matchDocId, setMatchDocId] = useState("");
-  const [showWinner, setShowWinner] = useState(true);
+
+  const [match, setMatch] = useState({ black: "", white: "", win: "" });
 
   const nextProbDict = {
     70: 10,
@@ -49,11 +51,9 @@ export default function Home() {
         collection(db, "matches"),
         where("id", "==", Number(matchId))
       );
-      getDocs(q).then((querySnapshot) => {
+      onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          setBlackPlayer(doc.data().black);
-          setWhitePlayer(doc.data().white);
-          setWinner(doc.data().win);
+          setMatch(doc.data());
           setMatchDocId(doc.id);
         });
       });
@@ -81,7 +81,7 @@ export default function Home() {
     if (nextProbability > 50) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
-      if (username === blackPlayer && winner === "") {
+      if (username === match.black && match.win === "") {
         setYourTurn(true);
       } else {
         setYourTurn(false);
@@ -89,18 +89,18 @@ export default function Home() {
     } else {
       setNextStoneColor(rootStyles.getPropertyValue("--white-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--black-color").trim());
-      if (username === whitePlayer && winner === "") {
+      if (username === match.white && match.win === "") {
         setYourTurn(true);
       } else {
         setYourTurn(false);
       }
     }
-  }, [blackPlayer, whitePlayer, nextProbability]);
+  }, [match, nextProbability]);
 
   function clickSurrender() {
     if (yourTurn) {
       const docRef = doc(db, "matches", matchDocId);
-      const opponent = username === blackPlayer ? whitePlayer : blackPlayer;
+      const opponent = username === match.black ? match.white : match.black;
       updateDoc(docRef, {
         win: opponent,
         status: "close",
@@ -116,10 +116,10 @@ export default function Home() {
 
   return (
     <div>
-      {winner !== "" && showWinner && (
+      {match.win !== "" && showWinner && (
         <div className="show-winner-cotainer">
           <div className="show-winner" onClick={() => setShowWinner(false)}>
-            <div className="show-winner-text">WINNER : {winner}</div>
+            <div className="show-winner-text">WINNER : {match.win}</div>
           </div>
         </div>
       )}
@@ -130,10 +130,10 @@ export default function Home() {
             outlineColor={blackColor}
             circleColor={blackColor}
           />
-          <h3>{blackPlayer}</h3>
+          <h3>{match.black}</h3>
         </div>
         <div className="match-player-name-content">
-          <h3>{whitePlayer}</h3>
+          <h3>{match.white}</h3>
           <GoStone
             size={size}
             outlineColor={blackColor}
