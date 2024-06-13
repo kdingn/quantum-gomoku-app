@@ -3,6 +3,7 @@
 import Match from "@/components/match";
 import { db } from "@/libs/firebase";
 import {
+  DocumentData,
   addDoc,
   and,
   collection,
@@ -17,12 +18,17 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
+interface MatchData {
+  docid: string;
+  doc: DocumentData;
+}
+
 export default function Home() {
   const username = sessionStorage.getItem("username");
-  const [openMatches, setOpenMatches] = useState([]);
-  const [yourMatch, setYourMatch] = useState([]);
+  const [openMatches, setOpenMatches] = useState<MatchData[]>([]);
+  const [yourMatch, setYourMatch] = useState<MatchData[]>([]);
   const [isYouHaveMatch, setIsYouHaveMatch] = useState(false);
-  const [maxMatchId, setMaxMatchId] = useState();
+  const [maxMatchId, setMaxMatchId] = useState<number | undefined>(undefined);
   const [standardMessage, setStandardMessage] = useState("");
 
   useEffect(() => {

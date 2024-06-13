@@ -15,6 +15,12 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface Match {
+  black: string;
+  white: string;
+  win: string;
+}
+
 export default function Home() {
   const size = 28;
   const matchId = useSearchParams().get("id");
@@ -27,14 +33,14 @@ export default function Home() {
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
   const [matchDocId, setMatchDocId] = useState("");
-  const [match, setMatch] = useState({ black: "", white: "", win: "" });
-  const [sequence, setSequence] = useState([]);
+  const [match, setMatch] = useState<Match>({ black: "", white: "", win: "" });
+  const [sequence, setSequence] = useState<any>();
   const nextProbDict = {
     70: 10,
     10: 90,
     90: 30,
     30: 70,
-  };
+  } as const;
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -48,7 +54,13 @@ export default function Home() {
       );
       onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          setMatch(doc.data());
+          const data = doc.data();
+          const matchData = {
+            black: data.black,
+            white: data.white,
+            win: data.win,
+          };
+          setMatch(matchData);
           setMatchDocId(doc.id);
         });
       });
@@ -63,9 +75,10 @@ export default function Home() {
       onSnapshot(q, (querySnapshot) => {
         setSequence(querySnapshot.docs.map((doc) => doc.data())[0]);
         const probability = querySnapshot.docs.map((doc) => doc.data())[0]
-          .probability;
+          .probability as number[];
         if (probability.length !== 0) {
-          setNextProbability(nextProbDict[probability.slice(-1)[0]]);
+          const lastProbability = probability.slice(-1)[0] as 70 | 10 | 90 | 30;
+          setNextProbability(nextProbDict[lastProbability]);
         }
       });
     }
