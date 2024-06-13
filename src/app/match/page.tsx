@@ -6,12 +6,11 @@ import GoStone from "@/components/goicons/go_stone";
 import { db } from "@/libs/firebase";
 import {
   collection,
-  getDocs,
-  query,
-  where,
-  onSnapshot,
-  updateDoc,
   doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,20 +19,15 @@ export default function Home() {
   const size = 28;
   const matchId = useSearchParams().get("id");
   const username = sessionStorage.getItem("username");
-
   const [blackColor, setBlackColor] = useState("");
   const [whiteColor, setWhiteColor] = useState("");
   const [showWinner, setShowWinner] = useState(true);
   const [yourTurn, setYourTurn] = useState(false);
-
   const [nextProbability, setNextProbability] = useState(70);
   const [nextStoneColor, setNextStoneColor] = useState("");
   const [nextTextColor, setNextTextColor] = useState("");
-
   const [matchDocId, setMatchDocId] = useState("");
-
   const [match, setMatch] = useState({ black: "", white: "", win: "" });
-
   const nextProbDict = {
     70: 10,
     10: 90,
@@ -78,7 +72,7 @@ export default function Home() {
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
-    if (nextProbability > 50) {
+    if (nextProbability > size * 2) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
       if (username === match.black && match.win === "") {
