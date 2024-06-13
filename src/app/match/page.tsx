@@ -72,7 +72,7 @@ export default function Home() {
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
-    if (nextProbability > size * 2) {
+    if (nextProbability > 50) {
       setNextStoneColor(rootStyles.getPropertyValue("--black-color").trim());
       setNextTextColor(rootStyles.getPropertyValue("--white-color").trim());
       if (username === match.black && match.win === "") {
@@ -143,7 +143,7 @@ export default function Home() {
           <div className="match-function-next">next</div>
           <div className="match-function-next-content">
             <GoStone
-              size={55}
+              size={size * 2}
               text={String(nextProbability)}
               outlineColor={blackColor}
               circleColor={nextStoneColor}
