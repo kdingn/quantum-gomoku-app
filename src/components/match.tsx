@@ -1,6 +1,7 @@
 import { db } from "@/libs/firebase";
 import CancelIcon from "@mui/icons-material/Cancel";
 import {
+  DocumentData,
   addDoc,
   collection,
   deleteDoc,
@@ -11,15 +12,20 @@ import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Match(props) {
+export default function Match(props: {
+  match: DocumentData;
+  docid: string;
+  isYouHaveMatch: boolean;
+  key: string;
+}) {
   const username = sessionStorage.getItem("username");
   const router = useRouter();
   const match = props.match;
   const users = _.shuffle([username, props.match.owner]);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState<Date>();
   useEffect(() => {
     try {
-      setDate(props.match.update.toDate());
+      setDate(props.match.create.toDate());
     } catch {}
   }, [props]);
 
@@ -50,7 +56,7 @@ export default function Match(props) {
     }
   }
 
-  function deleteMatch(e) {
+  function deleteMatch(e: React.MouseEvent<HTMLDivElement>) {
     deleteDoc(doc(db, "matches", props.docid));
     e.stopPropagation();
   }
