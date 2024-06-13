@@ -9,7 +9,12 @@ import Goup from "@/components/goicons/go_up";
 import Gour from "@/components/goicons/go_ur";
 import { useEffect, useState } from "react";
 
-export default function Gotile(props) {
+export default function Gotile(props: {
+  vindex: number;
+  hindex: number;
+  gobanSize: number;
+  prob: number | null;
+}) {
   const defaultTileSize = 40;
 
   const [boardColor, setBoardColor] = useState("");
@@ -22,7 +27,7 @@ export default function Gotile(props) {
     const rootStyles = getComputedStyle(document.documentElement);
     setBoardColor(rootStyles.getPropertyValue("--board-color").trim());
     setLineColor(rootStyles.getPropertyValue("--line-color").trim());
-    if (props.prob > 50) {
+    if (props.prob !== null && props.prob > 50) {
       setCircleColor(rootStyles.getPropertyValue("--black-color").trim());
       setTextColor(rootStyles.getPropertyValue("--white-color").trim());
     } else {
@@ -51,7 +56,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -62,7 +67,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -73,7 +78,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -87,7 +92,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -98,7 +103,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -109,7 +114,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -120,7 +125,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -131,7 +136,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />
@@ -142,7 +147,7 @@ export default function Gotile(props) {
         lineColor={lineColor}
         backgroundColor={boardColor}
         size={tileSize}
-        text={props.prob}
+        text={props.prob ? String(props.prob) : ""}
         textColor={textColor}
         circleColor={circleColor}
       />

@@ -1,6 +1,7 @@
 import Gotile from "@/components/gotile";
 import { db } from "@/libs/firebase";
 import {
+  DocumentData,
   collection,
   doc,
   onSnapshot,
@@ -11,11 +12,13 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Goban(props) {
-  const [positionProbMap, setPositionProbMap] = useState({});
-  const [sequence, setSequence] = useState();
+export default function Goban(props: { yourTurn: boolean }) {
+  const [positionProbMap, setPositionProbMap] = useState<{
+    [key: string]: number;
+  }>({});
+  const [sequence, setSequence] = useState<DocumentData>();
   const [error, setError] = useState("");
-  const [docid, setDocid] = useState();
+  const [docid, setDocid] = useState("");
   const matchId = useSearchParams().get("id");
   useEffect(() => {
     async function fetchData() {
@@ -40,13 +43,10 @@ export default function Goban(props) {
     }
     fetchData();
   }, [matchId]);
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   useEffect(() => {
     if (sequence) {
-      const map = {};
+      const map: { [key: string]: number } = {};
       for (let n = 0; n < sequence.probability.length; n++) {
         const key = `${sequence.i[n]}-${sequence.j[n]}`;
         map[key] = sequence.probability[n];
@@ -61,9 +61,9 @@ export default function Goban(props) {
     90: 30,
     30: 70,
   };
-  function addSequence(vindex, hindex) {
-    if (props.yourTurn) {
-      const lastProb =
+  function addSequence(vindex: number, hindex: number) {
+    if (props.yourTurn && sequence) {
+      const lastProb: 70 | 10 | 90 | 30 =
         sequence.probability.length !== 0
           ? sequence.probability.slice(-1)[0]
           : 30;
@@ -105,9 +105,13 @@ export default function Goban(props) {
     gobanDocument.push(<tr key={i}>{gobanRow}</tr>);
   }
 
-  return (
-    <table className="goban">
-      <tbody>{gobanDocument}</tbody>
-    </table>
-  );
+  if (error) {
+    return <div>{error}</div>;
+  } else {
+    return (
+      <table className="goban">
+        <tbody>{gobanDocument}</tbody>
+      </table>
+    );
+  }
 }

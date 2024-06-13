@@ -3,17 +3,17 @@
 import { db } from "@/libs/firebase";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     usernameSignup: "",
     passwordSignup: "",
-    errorSignup: null,
+    errorSignup: "",
     usernameSignin: "",
     passwordSignin: "",
-    errorSignin: null,
+    errorSignin: "",
   });
 
   async function signup() {
@@ -58,12 +58,12 @@ export default function Page() {
     }
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleKeyDownSignin = (e) => {
+  const handleKeyDownSignin = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       signin();
     }

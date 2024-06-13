@@ -69,7 +69,9 @@ export default function Home() {
       const docRef = doc(db, "variables", "max-match-id");
       onSnapshot(docRef, (docSnapshot) => {
         const data = docSnapshot.data();
-        setMaxMatchId(data.value);
+        if (data) {
+          setMaxMatchId(data.value);
+        }
       });
     }
     fetchMaxMatchId();
@@ -87,7 +89,7 @@ export default function Home() {
     }
   }, [openMatches]);
 
-  const yourMatchDocument = [];
+  const yourMatchDocument: React.ReactNode[] = [];
   yourMatch.forEach((match) => {
     yourMatchDocument.push(
       <Match
@@ -99,7 +101,7 @@ export default function Home() {
     );
   });
 
-  const openMatchesDocument = [];
+  const openMatchesDocument: React.ReactNode[] = [];
   openMatches.forEach((match) => {
     openMatchesDocument.push(
       <Match
@@ -114,7 +116,7 @@ export default function Home() {
   function createMatch() {
     if (isYouHaveMatch) {
       alert("You are already in or own a match.");
-    } else {
+    } else if (maxMatchId) {
       const newDoc = {
         owner: username,
         black: "",
