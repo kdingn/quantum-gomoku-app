@@ -258,6 +258,10 @@ body {
 .match-functions {
   display: flex;
   justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .match-function-small {
