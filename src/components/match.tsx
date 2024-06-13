@@ -33,7 +33,7 @@ export default function Match(props: {
     router.push(`/match?id=${match.id}`);
   }
 
-  function joinMatch() {
+  async function joinMatch() {
     if (props.isYouHaveMatch) {
       alert("You already have or be in a match.");
     } else {
@@ -44,7 +44,7 @@ export default function Match(props: {
         status: "progress",
       });
 
-      addDoc(collection(db, "sequences"), {
+      await addDoc(collection(db, "sequences"), {
         id: match.id,
         i: [],
         j: [],

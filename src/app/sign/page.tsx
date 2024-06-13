@@ -29,7 +29,7 @@ export default function Page() {
         ["errorSignup"]: `${formData.usernameSignup} already exists`,
       });
     } else {
-      addDoc(collection(db, "users"), {
+      await addDoc(collection(db, "users"), {
         username: formData.usernameSignup,
         password: formData.passwordSignup,
       });
