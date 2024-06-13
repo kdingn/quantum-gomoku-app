@@ -73,7 +73,7 @@ export default function Home() {
       });
     }
     fetchMaxMatchId();
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     setIsYouHaveMatch(yourMatch.length !== 0);

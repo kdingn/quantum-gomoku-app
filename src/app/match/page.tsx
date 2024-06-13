@@ -35,12 +35,6 @@ export default function Home() {
   const [matchDocId, setMatchDocId] = useState("");
   const [match, setMatch] = useState<Match>({ black: "", white: "", win: "" });
   const [sequence, setSequence] = useState<any>();
-  const nextProbDict = {
-    70: 10,
-    10: 90,
-    90: 30,
-    30: 70,
-  } as const;
 
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -68,6 +62,12 @@ export default function Home() {
     fetchMatch();
 
     function fetchSequence() {
+      const nextProbDict = {
+        70: 10,
+        10: 90,
+        90: 30,
+        30: 70,
+      };
       const q = query(
         collection(db, "sequences"),
         where("id", "==", Number(matchId))
@@ -104,7 +104,7 @@ export default function Home() {
         setYourTurn(false);
       }
     }
-  }, [match, nextProbability]);
+  }, [match, nextProbability, username]);
 
   function clickSurrender() {
     if (yourTurn) {

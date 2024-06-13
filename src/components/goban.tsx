@@ -1,11 +1,11 @@
 import Gotile from "@/components/gotile";
 import { db } from "@/libs/firebase";
 import {
-  doc,
-  updateDoc,
   collection,
+  doc,
   onSnapshot,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 export default function Goban(props) {
   const [positionProbMap, setPositionProbMap] = useState({});
   const [sequence, setSequence] = useState();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [docid, setDocid] = useState();
   const matchId = useSearchParams().get("id");
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Goban(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [matchId]);
   if (error) {
     return <div>{error}</div>;
   }
