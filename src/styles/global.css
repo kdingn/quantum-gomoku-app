@@ -285,6 +285,10 @@ body {
   border-radius: 5px;
 }
 
+.match-function-next-content-stone {
+  margin-top: 12px;
+}
+
 .match-function-next {
   margin-left: 6px;
   position: absolute;

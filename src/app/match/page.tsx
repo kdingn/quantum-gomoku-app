@@ -24,7 +24,7 @@ interface Match {
 }
 
 export default function Home() {
-  const size = 40;
+  const size = 50;
   const matchId = useSearchParams().get("id");
   const username = sessionStorage.getItem("username");
   const [blackColor, setBlackColor] = useState("");
@@ -177,13 +177,15 @@ export default function Home() {
         <div className="match-function-small">
           <div className="match-function-next">next</div>
           <div className="match-function-next-content">
-            <GoStone
-              size={size * 1.5}
-              text={String(nextProbability)}
-              outlineColor={blackColor}
-              circleColor={nextStoneColor}
-              textColor={nextTextColor}
-            ></GoStone>
+            <div className="match-function-next-content-stone">
+              <GoStone
+                size={size * 1.3}
+                text={String(nextProbability)}
+                outlineColor={blackColor}
+                circleColor={nextStoneColor}
+                textColor={nextTextColor}
+              ></GoStone>
+            </div>
           </div>
         </div>
         <div className="match-function-large">
