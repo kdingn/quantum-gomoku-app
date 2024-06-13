@@ -126,7 +126,7 @@ export default function Home() {
         setPositionProbMap(map);
       }
     }
-  }, [match, nextProbability, username]);
+  }, [match, nextProbability, username, matchDocId]);
 
   const checkWinCondition = (
     x: number,
@@ -214,7 +214,7 @@ export default function Home() {
         status: "close",
       });
     }
-  }, [positionProbMap]);
+  }, [positionProbMap, match, matchDocId]);
 
   function clickSurrender() {
     const docRef = doc(db, "matches", matchDocId);
