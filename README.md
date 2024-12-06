@@ -1,3 +1,8 @@
+# ⚠ Now the Service is Unavailable
+Sorry for inconvenience of playing on the [website](quantum-gomoku.web.app/), but now the service is end.
+
+---
+
 # ⚖ Quantum Gomoku
 Quantum gomoku is game gomoku with each stone probability of changing their color.
 
